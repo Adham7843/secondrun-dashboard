@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecondRun — The Startup Morgue File</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        paper: '#F6F1E7',
+        ink: '#1C1917',
+        muted: '#78716C',
+        hairline: '#E7E0D2',
+        cobalt: '#3858F6',
+        cobalthover: '#2C46D6',
+        cobaltint: '#EEF3FF',
+        gold: '#C8A45A',
+        goldtint: '#FAF3E3',
+        rebuild: '#1F6B3A',
+        greentint: '#E9F3EC',
+        stampamber: '#B7791F',
+        stampred: '#C92A2A',
+        tickerbg: '#14261B',
+      },
+      fontFamily: {
+        serif: ['Fraunces', 'Georgia', 'serif'],
+        body: ['Inter', 'Helvetica Neue', 'sans-serif'],
+        sans: ['Inter', 'Helvetica Neue', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'Courier New', 'monospace'],
+      }
+    }
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700;1,9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { border-radius: 0px !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #F6F1E7;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%231C1917' fill-opacity='0.04' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+    color: #1C1917;
+    font-family: 'Inter', Helvetica Neue, sans-serif;
+  }
+  .sharp-corners { border-radius: 0px !important; }
+  .newsprint-texture { position: relative; }
+  .newsprint-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(0deg, transparent 98%, rgba(28,25,23,0.03) 100%),
+      linear-gradient(90deg, transparent 98%, rgba(28,25,23,0.03) 100%);
+    background-size: 3px 3px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .hard-shadow-hover { transition: all 200ms ease-out; }
+  .hard-shadow-hover:hover {
+    box-shadow: 4px 4px 0px 0px #3858F6;
+    transform: translate(-2px, -2px);
+  }
+  .hard-shadow-green:hover {
+    box-shadow: 4px 4px 0px 0px #1F6B3A;
+    transform: translate(-2px, -2px);
+  }
+  .drop-cap::first-letter {
+    float: left;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 4.2rem;
+    line-height: 0.85;
+    padding-right: 0.6rem;
+    padding-top: 0.2rem;
+    color: #3858F6;
+  }
+  .ticker-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: ticker 28s linear infinite;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .btn-primary {
+    background: #3858F6;
+    color: #FFFFFF;
+    border: 1px solid #3858F6;
+    transition: all 200ms ease-out;
+  }
+  .btn-primary:hover {
+    background: #2C46D6;
+    border-color: #2C46D6;
+    color: #FFFFFF;
+  }
+  .btn-green {
+    background: #1F6B3A;
+    color: #FFFFFF;
+    border: 1px solid #1F6B3A;
+    transition: all 200ms ease-out;
+  }
+  .btn-green:hover {
+    background: #F6F1E7;
+    color: #1F6B3A;
+    border-color: #1F6B3A;
+  }
+  .nav-link { transition: color 200ms ease-out; }
+  .nav-link:hover { color: #3858F6; }
+  .read-link {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #3858F6;
+    color: #3858F6;
+  }
+  .read-link:hover { background: #3858F6; color: #FFFFFF; text-decoration-color: #3858F6; }
+  .stamp {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    transform: rotate(-2deg);
+    color: #FFFFFF;
+  }
+  .stamp-acquired { background: #B7791F; }
+  .stamp-inactive { background: #C92A2A; }
+  .stamp-active { background: #1F6B3A; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary .faq-icon { transition: transform 200ms ease-out; }
+  details[open] summary .faq-icon { transform: rotate(45deg); }
+  @media (max-width: 767px) {
+    .grid-border-r { border-right: none !important; }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============ 1. MASTHEAD ============ -->
+<header class="border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <!-- Edition metadata -->
+    <div class="flex items-center justify-between py-2 border-b border-hairline font-mono text-[11px] uppercase tracking-widest text-muted">
+      <span>Vol. 1 &middot; The Startup Morgue File</span>
+      <span class="hidden sm:inline">Filed daily &middot; Every failure legible</span>
+      <span>Edition No. 001</span>
+    </div>
+    <!-- Nameplate + nav -->
+    <div class="flex items-center justify-between gap-4 py-4">
+      <a href="#" class="font-serif font-black text-3xl sm:text-4xl lg:text-5xl tracking-tighter leading-none text-ink">SecondRun</a>
+      <nav class="hidden md:flex items-center gap-8 font-sans text-xs font-semibold uppercase tracking-widest" aria-label="Primary">
+        <a href="#dossiers" class="nav-link">Dossiers</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#faq" class="nav-link">Manifesto</a>
+        <a href="#" class="nav-link">Sign in</a>
+      </nav>
+      <a href="#pricing" class="btn-primary font-sans text-xs font-semibold uppercase tracking-widest px-5 py-3 min-h-[44px] inline-flex items-center whitespace-nowrap">Start reading &mdash; free</a>
+    </div>
+    <!-- Mobile nav -->
+    <nav class="md:hidden flex items-center gap-6 pb-4 font-sans text-xs font-semibold uppercase tracking-widest overflow-x-auto" aria-label="Mobile">
+      <a href="#dossiers" class="nav-link whitespace-nowrap">Dossiers</a>
+      <a href="#pricing" class="nav-link whitespace-nowrap">Pricing</a>
+      <a href="#faq" class="nav-link whitespace-nowrap">Manifesto</a>
+      <a href="#" class="nav-link whitespace-nowrap">Sign in</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ 2. TICKER ============ -->
+<div class="bg-tickerbg text-paper overflow-hidden border-b border-ink" aria-hidden="true">
+  <div class="py-2 font-mono text-xs tracking-widest uppercase">
+    <div class="ticker-track">
+      <span class="px-4">1,200+ autopsies filed <span class="text-gold px-2">|</span> 42 batches covered <span class="text-gold px-2">|</span> Pro $19/mo <span class="text-gold px-2">|</span>&nbsp;</span>
+      <span class="px-4">1,200+ autopsies filed <span class="text-gold px-2">|</span> 42 batches covered <span class="text-gold px-2">|</span> Pro $19/mo <span class="text-gold px-2">|</span>&nbsp;</span>
+      <span class="px-4">1,200+ autopsies filed <span class="text-gold px-2">|</span> 42 batches covered <span class="text-gold px-2">|</span> Pro $19/mo <span class="text-gold px-2">|</span>&nbsp;</span>
+      <span class="px-4">1,200+ autopsies filed <span class="text-gold px-2">|</span> 42 batches covered <span class="text-gold px-2">|</span> Pro $19/mo <span class="text-gold px-2">|</span>&nbsp;</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3. FRONT-PAGE HERO (8/4) ============ -->
+<section class="newsprint-texture border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-12 lg:py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Left: 8 cols -->
+      <div class="lg:col-span-8 lg:border-r lg:border-hairline lg:pr-10">
+        <p class="font-mono text-xs uppercase tracking-widest mb-4"><span class="inline-block w-2 h-2 bg-rebuild mr-2"></span>The Pre-Mortem Edition</p>
+        <h1 class="font-serif font-black tracking-tighter leading-[0.9] text-5xl sm:text-6xl lg:text-8xl text-ink">Every dead startup is a lesson. Read the <em class="text-cobalt">autopsy.</em></h1>
+        <div class="flex flex-wrap gap-2 mt-6">
+          <span class="inline-flex items-center bg-white border border-hairline font-mono text-[11px] uppercase tracking-widest px-3 py-1.5"><span class="inline-block w-1.5 h-4 bg-cobalt mr-2"></span><span class="bg-cobaltint px-1">1,200+ dossiers</span></span>
+          <span class="inline-flex items-center bg-white border border-hairline font-mono text-[11px] uppercase tracking-widest px-3 py-1.5"><span class="inline-block w-1.5 h-4 bg-gold mr-2"></span><span class="bg-goldtint px-1">42 batches</span></span>
+          <span class="inline-flex items-center bg-white border border-hairline font-mono text-[11px] uppercase tracking-widest px-3 py-1.5"><span class="inline-block w-1.5 h-4 bg-rebuild mr-2"></span><span class="bg-greentint px-1">310 rebuild plans</span></span>
+        </div>
+        <p class="drop-cap font-body text-base lg:text-lg leading-relaxed mt-8 text-justify">HigherMe (W15) built restaurant-hiring software. It was acquired &mdash; its independence died. Here&rsquo;s what killed it, and how you&rsquo;d rebuild it.</p>
+        <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+          <a href="#dossiers" class="btn-primary font-sans text-xs font-semibold uppercase tracking-widest px-8 py-4 min-h-[44px] inline-flex items-center justify-center w-full sm:w-auto">Browse the graveyard &mdash; free</a>
+          <span class="font-mono text-[11px] uppercase tracking-widest text-muted">Free forever &middot; No signup</span>
+        </div>
+      </div>
+      <!-- Right: 4 cols — Latest filing dossier card -->
+      <aside class="lg:col-span-4">
+        <p class="font-mono text-xs uppercase tracking-widest text-muted mb-3">Latest filing &middot; Fig. 1.1</p>
+        <article class="border border-hairline bg-white p-6 hard-shadow-hover border-l-4 border-l-cobalt">
+          <div class="flex items-center justify-between mb-3">
+            <span class="font-mono text-xs uppercase tracking-widest text-muted">Batch W15</span>
+            <span class="stamp stamp-acquired">Acquired</span>
+          </div>
+          <h2 class="font-serif font-bold text-2xl lg:text-3xl text-ink">HigherMe</h2>
+          <p class="font-sans text-sm text-muted mt-1">Restaurant-hiring software, acqui-hired out of independence.</p>
+          <p class="font-mono text-[11px] uppercase tracking-widest text-muted mt-3">Founders: Rob Hunter, Jeffery G. &middot; Filed this week</p>
+          <div class="border-t border-hairline mt-4 pt-4">
+            <p class="font-body text-sm leading-relaxed text-justify">The teardown shows a single-channel dependency on walk-in restaurant traffic, and when that channel froze the unit economics never recov&mdash;</p>
+            <a href="#dossiers" class="read-link font-sans text-xs font-semibold uppercase tracking-widest mt-3 inline-block">Unlock the full autopsy &rarr;</a>
+          </div>
+          <div class="border border-hairline mt-4">
+            <div class="flex items-center justify-between bg-rebuild text-white px-3 py-2">
+              <span class="font-mono text-[11px] uppercase tracking-widest">Rebuild prompt</span>
+              <button id="copyBtn" type="button" class="font-mono text-[11px] uppercase tracking-widest underline underline-offset-4 min-h-[44px] min-w-[44px] px-2 hover:opacity-80" aria-label="Copy rebuild prompt">Copy</button>
+            </div>
+            <pre id="rebuildSnippet" class="font-mono text-xs leading-relaxed p-3 overflow-x-auto text-justify bg-greentint">Rebuild HigherMe for 2026: SMB hiring, WhatsApp-first apply flow, $49/mo flat. Avoid single-channel risk.</pre>
+          </div>
+        </article>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. THIS WEEK'S AUTOPSIES ============ -->
+<section id="dossiers" class="border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-16">
+    <div class="flex items-end justify-between border-b-4 border-ink pb-4 mb-0">
+      <h2 class="font-serif font-black text-4xl lg:text-5xl tracking-tight text-ink">This week&rsquo;s autopsies</h2>
+      <span class="hidden sm:inline font-mono text-xs uppercase tracking-widest text-muted">3 fresh filings</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 border-l border-t border-hairline mt-0">
+      <!-- Card 1 -->
+      <article class="border-r border-b border-hairline p-6 hard-shadow-hover bg-white grid-border-r border-l-4 border-l-stampamber">
+        <span class="stamp stamp-acquired">Acquired</span>
+        <h3 class="font-serif font-bold text-2xl mt-4 text-ink">HigherMe <span class="font-mono text-xs font-normal text-muted">W15</span></h3>
+        <p class="font-body text-sm leading-relaxed mt-2 text-muted">Restaurant-hiring software that traded independence for an acqui-hire.</p>
+        <a href="#" class="read-link font-sans text-xs font-semibold uppercase tracking-widest mt-4 inline-block">Read file &rarr;</a>
+      </article>
+      <!-- Card 2 -->
+      <article class="border-r border-b border-hairline p-6 hard-shadow-hover bg-white grid-border-r border-l-4 border-l-stampred">
+        <span class="stamp stamp-inactive">Inactive</span>
+        <h3 class="font-serif font-bold text-2xl mt-4 text-ink">LunchBadger <span class="font-mono text-xs font-normal text-muted">W18</span></h3>
+        <p class="font-body text-sm leading-relaxed mt-2 text-muted">Office lunch delivery that starved on route density and thin margins.</p>
+        <a href="#" class="read-link font-sans text-xs font-semibold uppercase tracking-widest mt-4 inline-block">Read file &rarr;</a>
+      </article>
+      <!-- Card 3 -->
+      <article class="border-r border-b border-hairline p-6 hard-shadow-hover bg-white grid-border-r border-l-4 border-l-stampred">
+        <span class="stamp stamp-inactive">Inactive</span>
+        <h3 class="font-serif font-bold text-2xl mt-4 text-ink">Shipwise <span class="font-mono text-xs font-normal text-muted">S21</span></h3>
+        <p class="font-body text-sm leading-relaxed mt-2 text-muted">Micro-SaaS analytics that drowned in a sea of dashboards nobody opened.</p>
+        <a href="#" class="read-link font-sans text-xs font-semibold uppercase tracking-widest mt-4 inline-block">Read file &rarr;</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Ornamental divider -->
+<div class="py-8 text-center font-serif text-2xl text-gold tracking-[1em]" aria-hidden="true">&#10022; &#10022; &#10022;</div>
+
+<!-- ============ 5. INVERTED NUMBERS ============ -->
+<section class="bg-ink text-paper border-y-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-16">
+    <p class="font-mono text-xs uppercase tracking-widest text-muted mb-2">The ledger so far</p>
+    <h2 class="font-serif font-black text-4xl lg:text-5xl tracking-tight">Counted, filed, cross-referenced.</h2>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-0 mt-10 border-l border-t border-paper/20">
+      <div class="border-r border-b border-paper/20 p-6">
+        <p class="font-mono font-bold text-3xl lg:text-4xl text-cobalt" style="color:#7C92FF;">1,200+</p>
+        <p class="font-mono text-[11px] uppercase tracking-widest mt-2 text-paper/60">Companies filed</p>
+      </div>
+      <div class="border-r border-b border-paper/20 p-6">
+        <p class="font-mono font-bold text-3xl lg:text-4xl text-gold">42</p>
+        <p class="font-mono text-[11px] uppercase tracking-widest mt-2 text-paper/60">Batches covered</p>
+      </div>
+      <div class="border-r border-b border-paper/20 p-6">
+        <p class="font-mono font-bold text-3xl lg:text-4xl" style="color:#7C92FF;">87</p>
+        <p class="font-mono text-[11px] uppercase tracking-widest mt-2 text-paper/60">Causes of death indexed</p>
+      </div>
+      <div class="border-r border-b border-paper/20 p-6">
+        <p class="font-mono font-bold text-3xl lg:text-4xl" style="color:#5FBF82;">310</p>
+        <p class="font-mono text-[11px] uppercase tracking-widest mt-2 text-paper/60">Rebuild plans shipped</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. PRICING LEDGER ============ -->
+<section id="pricing" class="newsprint-texture border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-16">
+    <p class="font-mono text-xs uppercase tracking-widest text-muted mb-2">The price list</p>
+    <h2 class="font-serif font-black text-4xl lg:text-5xl tracking-tight text-ink">Two ways to read.</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+      <!-- Free -->
+      <article class="border border-hairline bg-white p-8 hard-shadow-hover border-t-4 border-t-cobalt">
+        <p class="font-mono text-xs uppercase tracking-widest text-muted">The Browser</p>
+        <p class="mt-4"><span class="font-serif font-black text-5xl text-ink">$0</span> <span class="font-mono text-xs uppercase tracking-widest text-muted">/ forever</span></p>
+        <ul class="mt-6 font-body text-sm leading-relaxed">
+          <li class="py-3 border-t border-dashed border-hairline">Browse the full graveyard</li>
+          <li class="py-3 border-t border-dashed border-hairline">Company &amp; founder profiles</li>
+          <li class="py-3 border-t border-dashed border-hairline">3 sample full reports</li>
+          <li class="py-3 border-y border-dashed border-hairline">Teardown previews on every file</li>
+        </ul>
+        <a href="#" class="mt-8 inline-flex items-center justify-center w-full border border-cobalt text-cobalt bg-cobaltint font-sans text-xs font-semibold uppercase tracking-widest px-6 py-4 min-h-[44px] hover:bg-cobalt hover:text-white transition-all duration-200">Start reading &mdash; free</a>
+      </article>
+      <!-- Pro -->
+      <article class="border-2 border-gold bg-white p-8 hard-shadow-green">
+        <p class="font-mono text-xs uppercase tracking-widest"><span class="inline-block bg-gold text-white px-2 py-0.5 font-bold" style="transform:rotate(-2deg);">&#9733; Most read</span></p>
+        <p class="mt-4"><span class="font-serif font-black text-5xl text-ink">$19</span> <span class="font-mono text-xs uppercase tracking-widest text-muted">/ mo &middot; $14 annual</span></p>
+        <ul class="mt-6 font-body text-sm leading-relaxed">
+          <li class="py-3 border-t border-dashed border-hairline"><span class="text-gold font-bold mr-1">&#10003;</span> Every full teardown, unlocked</li>
+          <li class="py-3 border-t border-dashed border-hairline"><span class="text-rebuild font-bold mr-1">&#10003;</span> Rebuild plans + technical specs</li>
+          <li class="py-3 border-t border-dashed border-hairline"><span class="text-gold font-bold mr-1">&#10003;</span> 5 fresh requests / month</li>
+          <li class="py-3 border-y border-dashed border-hairline"><span class="text-gold font-bold mr-1">&#10003;</span> Agent export prompts</li>
+        </ul>
+        <a href="#" class="btn-primary font-sans text-xs font-semibold uppercase tracking-widest px-6 py-4 min-h-[44px] mt-8 inline-flex items-center justify-center w-full">Go Pro &mdash; $19/mo</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. FAQ ============ -->
+<section id="faq" class="border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-4">
+        <p class="font-mono text-xs uppercase tracking-widest text-muted mb-2">Letters to the editor</p>
+        <h2 class="font-serif font-black text-4xl lg:text-5xl tracking-tight text-ink">Questions, answered.</h2>
+      </div>
+      <div class="lg:col-span-8">
+        <div class="border-t-2 border-ink">
+          <details class="border-b border-hairline group bg-white px-4">
+            <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none min-h-[44px]">
+              <span class="font-serif font-bold text-xl text-ink">Is it only YC startups?</span>
+              <span class="faq-icon font-mono text-2xl leading-none select-none text-cobalt">+</span>
+            </summary>
+            <p class="font-body text-sm leading-relaxed pb-6 pr-10 text-justify">We started with YC because its batches are the best-documented graveyard in tech. We are expanding to every accelerator and indie shutdown with a paper trail.</p>
+          </details>
+          <details class="border-b border-hairline group bg-greentint px-4">
+            <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none min-h-[44px]">
+              <span class="font-serif font-bold text-xl text-ink">What is a rebuild plan?</span>
+              <span class="faq-icon font-mono text-2xl leading-none select-none text-rebuild">+</span>
+            </summary>
+            <p class="font-body text-sm leading-relaxed pb-6 pr-10 text-justify">A concrete second attempt: the wedge the original missed, a technical spec for 2026 tooling, and the failure modes to avoid &mdash; so you don&rsquo;t die the same way.</p>
+          </details>
+          <details class="border-b border-hairline group bg-white px-4">
+            <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none min-h-[44px]">
+              <span class="font-serif font-bold text-xl text-ink">Can I request a startup?</span>
+              <span class="faq-icon font-mono text-2xl leading-none select-none text-cobalt">+</span>
+            </summary>
+            <p class="font-body text-sm leading-relaxed pb-6 pr-10 text-justify">Yes. Pro members file up to 5 fresh requests a month, and our researchers pull the filings, interviews, and post-mortems into a new dossier.</p>
+          </details>
+          <details class="border-b border-hairline group bg-cobaltint px-4">
+            <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none min-h-[44px]">
+              <span class="font-serif font-bold text-xl text-ink">Do I install anything?</span>
+              <span class="faq-icon font-mono text-2xl leading-none select-none text-cobalt">+</span>
+            </summary>
+            <p class="font-body text-sm leading-relaxed pb-6 pr-10 text-justify">No &mdash; it&rsquo;s a library. Open a dossier in your browser, read the autopsy, and copy the rebuild prompt into whatever agent or editor you already use.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. FINAL BLACK CTA ============ -->
+<section class="bg-ink text-paper">
+  <div class="max-w-screen-xl mx-auto px-4 py-20 text-center">
+    <p class="font-mono text-xs uppercase tracking-widest text-gold mb-4">Final edition notice</p>
+    <h2 class="font-serif font-black tracking-tighter leading-[0.95] text-4xl sm:text-5xl lg:text-7xl max-w-3xl mx-auto">Don&rsquo;t pay for your own <em class="text-cobalt" style="color:#7C92FF;">autopsy.</em></h2>
+    <a href="#pricing" class="btn-primary font-sans text-xs font-semibold uppercase tracking-widest px-10 py-4 min-h-[44px] mt-10 inline-flex items-center justify-center">Start reading &mdash; free</a>
+  </div>
+</section>
+
+<!-- ============ 9. FOOTER ============ -->
+<footer class="border-t-4 border-gold bg-paper">
+  <div class="max-w-screen-xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <p class="font-mono text-[11px] uppercase tracking-widest text-muted">Edition Vol. 1.0 &middot; SecondRun</p>
+    <p class="font-mono text-[11px] uppercase tracking-widest text-muted">Every failure filed. Every lesson legible.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('copyBtn');
+  var snippet = document.getElementById('rebuildSnippet');
+  if (!btn || !snippet) return;
+  btn.addEventListener('click', function () {
+    var text = snippet.textContent;
+    function done() {
+      btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, done);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      done();
+    }
+  });
+})();
+</script>
+</body>
+</html>

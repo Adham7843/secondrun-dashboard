@@ -1,0 +1,157 @@
+[
+  {
+    "slug": "higherme",
+    "name": "HigherMe",
+    "batch": "W15",
+    "status": "ACQUIRED",
+    "tagline": "Hourly staff hiring and onboarding platform for restaurants and retail franchises",
+    "industry": "B2B SaaS",
+    "location": "Boston & Toronto",
+    "foundedYear": 2014,
+    "closedYear": 2021,
+    "capitalBurned": "$3.2M",
+    "fatalFlawSummary": "High customer churn among independent restaurants combined with high human sales rep acquisition costs.",
+    "ycUrl": "https://www.ycombinator.com/companies/higherme",
+    "websiteUrl": "https://higherme.com",
+    "founders": [
+      {
+        "name": "Rob Hunter",
+        "role": "Co-founder & CEO",
+        "linkedinUrl": "https://linkedin.com/in/robhunter"
+      },
+      {
+        "name": "Graham Toppin",
+        "role": "Co-founder & CTO"
+      }
+    ],
+    "teardown": {
+      "overview": "HigherMe targeted the high-turnover restaurant and retail labor market. Instead of paper applications, candidates applied through automated text messages and video snippets. Franchisees could review, score, and schedule interviews in seconds. The product had clear utility, but the go-to-market model struggled with customer churn and expensive human outbound sales teams.",
+      "fatalFlaw": "Independent restaurants go out of business at an astronomical rate (over 30% in year one). HigherMe maintained an expensive outbound sales force to acquire single-unit owners. When customer lifetime value (LTV) failed to cover the $1,200+ acquisition cost (CAC), growth plateaued, ultimately forcing a distress acquisition.",
+      "antiPatterns": [
+        "Selling to low-margin mom-and-pop restaurants with expensive salaried outbound sales reps.",
+        "Relying on custom integrations per payroll provider instead of standardized self-serve CSV/webhook exports.",
+        "Failing to monetize candidate placement fees, capturing only tiny monthly SaaS subscriptions."
+      ],
+      "rebuildThesis": "Rebuild as an entirely automated, self-serve WhatsApp/SMS bot. Zero human sales touch. Target mid-market regional franchise operators (5-50 locations) where churn is low. Charge a flat $49/mo platform fee plus $10 per verified hire.",
+      "businessModel": "Self-serve multi-tenant SaaS + pay-per-hire micro transaction fee. Operating cost under $80/month using Meta Cloud API and serverless edge functions.",
+      "sections": [
+        {
+          "title": "The Opportunity & YC Batch W15",
+          "body": "In 2014, hourly hiring was broken. Restaurant managers spent 15 hours a week sifting through paper resumes while dining room staff churned at 150% annually. HigherMe built a mobile-first funnel that allowed teenagers and hourly workers to apply in 60 seconds from their phones."
+        },
+        {
+          "title": "The Fatal Go-To-Market Trap",
+          "body": "While corporate franchise groups loved the product, the sales cycle dragged on for 9 months. To compensate, the team tried selling to single-unit restaurants. Single-unit restaurant owners rarely check dashboards, frequently miss subscription payments, and switch software on a whim. The unit economics inverted."
+        },
+        {
+          "title": "The Rebuild Playbook",
+          "body": "Today, conversational AI and WhatsApp Business API eliminate the need for a custom app. A QR code on a restaurant door launches a WhatsApp chatbot that qualifies the candidate in 3 questions and syncs interview slots directly to the manager's Google Calendar."
+        }
+      ],
+      "agentPrompt": "# GOAL: Rebuild Lean HigherMe (Self-serve Restaurant Hiring Bot via WhatsApp)\n## TECH STACK: Next.js 14, Tailwind, Prisma (PostgreSQL), Meta WhatsApp Cloud API, Stripe\n\n## POC-TO-SPEC: ARCHITECTURE SEAMS\n- Model Restaurant: id, name, slug, phone, ownerEmail, subscriptionTier, maxActiveJobs\n- Model JobPost: id, restaurantId, title, requirements, hourlyRate, active\n- Model Candidate: id, jobPostId, phone, name, answersJson, status (NEW, SCREENED, SCHEDULED, REJECTED)\n\n## POC-TO-TICKETS: EXECUTION PLAN\n- [ ] Task 1: Initialize Prisma schema with Restaurant, JobPost, Candidate models\n- [ ] Task 2: Build WhatsApp webhook endpoint at /api/webhooks/whatsapp to handle incoming applicant messages\n- [ ] Task 3: Implement 3-question state machine (Age, Experience, Availability) with automated scoring\n- [ ] Task 4: Build manager dashboard at /dashboard showing candidate cards with 1-click WhatsApp chat and calendar invite buttons\n- [ ] Task 5: Implement self-serve billing with Stripe ($49/mo franchise tier)",
+      "sources": [
+        "https://www.ycombinator.com/companies/higherme",
+        "https://techcrunch.com/2015/08/18/y-combinator-demo-day-summer-2015/",
+        "Primary founder post-mortem interview archives"
+      ]
+    }
+  },
+  {
+    "slug": "lunchbadger",
+    "name": "LunchBadger",
+    "batch": "W18",
+    "status": "INACTIVE",
+    "tagline": "Microservices orchestration and visual API management platform on Kubernetes",
+    "industry": "Developer Tools",
+    "location": "San Francisco, CA",
+    "foundedYear": 2017,
+    "closedYear": 2020,
+    "capitalBurned": "$2.1M",
+    "fatalFlawSummary": "Over-engineered visual UI for developers who fundamentally preferred code, CLI, and GitOps workflows.",
+    "ycUrl": "https://www.ycombinator.com/companies/lunchbadger",
+    "websiteUrl": "https://lunchbadger.com",
+    "founders": [
+      {
+        "name": "Al Momtahan",
+        "role": "Co-founder & CEO"
+      }
+    ],
+    "teardown": {
+      "overview": "LunchBadger attempted to provide a visual canvas for designing, deploying, and managing serverless microservices and API gateways on top of Kubernetes. They raised seed funding from Y Combinator and angels to solve microservice spaghetti.",
+      "fatalFlaw": "Senior backend and cloud engineers disliked dragging-and-dropping boxes to build APIs. The tool fell into the 'uncanny valley': too complex for non-technical users, but too restrictive and proprietary for real Kubernetes developers who wanted YAML, Terraform, and Git pull requests.",
+      "antiPatterns": [
+        "Trying to replace code and Git workflows with a proprietary visual canvas.",
+        "Targeting enterprise DevOps without compliance certifications (SOC2, ISO).",
+        "High infrastructure burn hosting multi-tenant Kubernetes clusters for free-tier users."
+      ],
+      "rebuildThesis": "Drop the visual drag-and-drop canvas entirely. Rebuild as a headless CLI + GitHub Action that audits Kubernetes service topologies and generates clean OpenTelemetry architecture diagrams automatically on every git push.",
+      "businessModel": "Developer seat subscription ($19/developer/month) via GitHub Marketplace. Zero hosting costs (runs inside user's CI/CD).",
+      "sections": [
+        {
+          "title": "The Microservices Wave",
+          "body": "In 2017, every enterprise was splitting monoliths into dozens of microservices. LunchBadger believed developers needed a visual IDE to compose serverless functions and Express/Node gateways together."
+        },
+        {
+          "title": "The Developer Rejection",
+          "body": "Developers resisted committing visual configurations into version control. When GitOps and Kubernetes operators matured, visual canvas tools became obsolete overnight."
+        }
+      ],
+      "agentPrompt": "# GOAL: Rebuild LunchBadger as Headless GitOps Microservice Topology Auditor\n## TECH STACK: Node.js/TypeScript CLI, Go/Rust analyzer, GitHub Action, SVG renderer\n\n## POC-TO-SPEC: ARCHITECTURE SEAMS\n- Command `audit-services`: parses Kubernetes k8s/ helm charts and docker-compose.yml\n- Detects dead routes, missing CORS, and unauthenticated inter-service HTTP calls\n- Emits zero-dependency interactive SVG architecture diagram into PR summary\n\n## POC-TO-TICKETS: EXECUTION PLAN\n- [ ] Task 1: Build AST parser for docker-compose and Kubernetes Service/Ingress manifests\n- [ ] Task 2: Implement graph cycle and orphan service detector\n- [ ] Task 3: Build GitHub Action wrapper that posts markdown report with diagram to pull requests\n- [ ] Task 4: Add telemetry export to OpenTelemetry standard format",
+      "sources": [
+        "https://www.ycombinator.com/companies/lunchbadger",
+        "Hacker News discussion: Why visual programming for cloud architectures struggles"
+      ]
+    }
+  },
+  {
+    "slug": "shipwise",
+    "name": "Shipwise",
+    "batch": "S21",
+    "status": "INACTIVE",
+    "tagline": "Automated customs duty calculations and cross-border freight analytics for Shopify stores",
+    "industry": "E-commerce Infrastructure",
+    "location": "New York, NY",
+    "foundedYear": 2021,
+    "closedYear": 2023,
+    "capitalBurned": "$1.8M",
+    "fatalFlawSummary": "Crushed by platform risk when Shopify introduced native cross-border duties and markets in their core tier.",
+    "ycUrl": "https://www.ycombinator.com/companies/shipwise",
+    "websiteUrl": "https://shipwise.io",
+    "founders": [
+      {
+        "name": "Elena Rostova",
+        "role": "CEO"
+      },
+      {
+        "name": "Marcus Vance",
+        "role": "CTO"
+      }
+    ],
+    "teardown": {
+      "overview": "Shipwise built a Shopify app that calculated landed costs (tariffs, customs clearance, import VAT) at checkout for DTC brands selling internationally. Merchants loved it because buyers no longer faced unexpected COD customs invoices at their doorstep.",
+      "fatalFlaw": "Platform risk materialized. Shopify launched 'Shopify Markets', embedding native duty calculations into the standard checkout. Shipwise's merchant churn jumped to 45% within three months as store owners saw no reason to pay an extra $149/mo for an external app.",
+      "antiPatterns": [
+        "Building a single-feature utility that is an obvious native roadmap item for the host platform.",
+        "Over-reliance on Shopify App Store traffic with zero independent distribution.",
+        "Charging fixed high SaaS pricing to small merchants who only had occasional cross-border orders."
+      ],
+      "rebuildThesis": "Pivot away from Shopify-only and away from simple checkout math. Rebuild as an automated post-order customs dispute and tariff refund recovery agent that integrates with DHL, FedEx, and UPS to reclaim overpaid customs fees for importers.",
+      "businessModel": "Contingency fee model: 20% of recovered overpaid tariffs. Zero upfront SaaS cost. High trust, zero platform dependency.",
+      "sections": [
+        {
+          "title": "The Landed Cost Problem",
+          "body": "Cross-border e-commerce exploded in 2020. DTC brands shipping from the US to Europe and UK suffered 25% package return rates when customers were hit with surprise 20% VAT customs bills on delivery."
+        },
+        {
+          "title": "The Shopify Markets Execution",
+          "body": "When host platforms solve their own biggest merchant pain points, single-feature wrappers die. Shipwise had no moat once Shopify partnered directly with global customs brokers."
+        }
+      ],
+      "agentPrompt": "# GOAL: Rebuild Shipwise as an Automated Courier Tariff Refund Recovery Agent\n## TECH STACK: Python / FastAPI, PostgreSQL, FedEx/DHL/UPS Tracking APIs, Stripe Invoicing\n\n## POC-TO-SPEC: ARCHITECTURE SEAMS\n- Model ImporterAccount: id, companyName, courierApiKeysJson, feePercentage\n- Model ShipmentAudit: id, trackingNumber, declaredValue, tariffPaid, correctTariffCalculated, refundClaimStatus\n- Discrepancy detector: calculates Harmonized System (HS) code classification errors\n\n## POC-TO-TICKETS: EXECUTION PLAN\n- [ ] Task 1: Setup courier invoice parser (PDF & CSV ingestion)\n- [ ] Task 2: Implement HS code audit engine comparing declared vs actual item classification\n- [ ] Task 3: Build automated dispute letter generator with courier submission API\n- [ ] Task 4: Implement Stripe auto-charge for 20% recovery fee upon confirmed courier refund",
+      "sources": [
+        "https://www.ycombinator.com/companies/shipwise",
+        "Shopify Markets launch press release and tariff compliance analysis"
+      ]
+    }
+  }
+]

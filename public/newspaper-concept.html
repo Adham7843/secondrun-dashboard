@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Second Run Dispatch — Pure Newsprint Concept</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #F9F9F7;
+      --paper-tint: #F2F1EC;
+      --ink: #111111;
+      --ink-muted: #555555;
+      --ink-light: #888888;
+      --red: #991B1B;
+      --red-hover: #7F1D1D;
+      --red-light: #FEF2F2;
+      --border-ink: 1px solid #111111;
+      --border-thick: 3px solid #111111;
+      --border-double: 3px double #111111;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important; /* 0px radius rule from vault newsprint spec */
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 15px;
+      line-height: 1.65;
+      background-image: radial-gradient(rgba(17, 17, 17, 0.05) 1px, transparent 1px);
+      background-size: 16px 16px;
+      padding: 24px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .broadsheet-wrapper {
+      max-width: 1240px;
+      margin: 0 auto;
+      border-left: var(--border-ink);
+      border-right: var(--border-ink);
+      padding: 24px 32px;
+      background-color: var(--paper);
+    }
+
+    /* TOP BULLETIN BANNER */
+    .top-bulletin {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border-bottom: var(--border-ink);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    .badge-red {
+      background-color: var(--red);
+      color: #FFFFFF;
+      padding: 2px 8px;
+      font-weight: 700;
+    }
+
+    /* MASTHEAD */
+    .masthead {
+      border-top: 4px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      padding: 16px 0;
+      text-align: center;
+    }
+
+    .masthead-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-bottom: var(--border-ink);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+
+    .masthead-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 900;
+      font-size: clamp(42px, 7.5vw, 108px);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      padding: 8px 0;
+    }
+
+    .masthead-subline {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-top: var(--border-ink);
+      padding-top: 8px;
+      margin-top: 12px;
+    }
+
+    /* SECTION NAV */
+    .broadsheet-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: var(--border-ink);
+      padding: 10px 0;
+    }
+
+    .nav-links a {
+      color: var(--ink);
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: var(--red);
+      text-decoration: underline;
+    }
+
+    /* 2-COLUMN BROADSHEET GRID (8 / 4 SPLIT) */
+    .broadsheet-grid {
+      display: grid;
+      grid-template-columns: 8fr 4fr;
+      gap: 36px;
+      padding-top: 24px;
+      border-bottom: var(--border-ink);
+      padding-bottom: 32px;
+    }
+
+    @media (max-width: 960px) {
+      .broadsheet-grid {
+        grid-template-columns: 1fr;
+      }
+      .main-story {
+        border-right: none !important;
+        padding-right: 0 !important;
+      }
+    }
+
+    .main-story {
+      border-right: var(--border-ink);
+      padding-right: 36px;
+    }
+
+    .kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(32px, 4vw, 54px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      color: var(--ink);
+    }
+
+    .deck {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 19px;
+      line-height: 1.45;
+      font-style: italic;
+      color: #2A2A2A;
+      border-left: 3px solid var(--red);
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+
+    .byline-bar {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-muted);
+      border-top: var(--border-ink);
+      border-bottom: var(--border-ink);
+      padding: 6px 0;
+      margin-bottom: 24px;
+    }
+
+    /* 2-COL STORY BODY */
+    .story-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      text-align: justify;
+    }
+
+    @media (max-width: 640px) {
+      .story-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .drop-cap {
+      float: left;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 64px;
+      line-height: 0.8;
+      padding-top: 4px;
+      padding-right: 10px;
+      font-weight: 900;
+      color: var(--red);
+    }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      padding: 20px 24px;
+      margin: 28px 0;
+      text-align: center;
+    }
+
+    .pull-quote blockquote {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-style: italic;
+      line-height: 1.35;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .pull-quote cite {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* COST INVERSION TABLE */
+    .table-container {
+      margin: 28px 0;
+      border: var(--border-ink);
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      background-color: var(--ink);
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #E5E5E0;
+    }
+
+    th {
+      background-color: var(--paper-tint);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+    }
+
+    .text-red {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .text-burn {
+      color: #991B1B;
+      font-weight: 600;
+    }
+
+    /* SPECIFICATION VAULT (PAYWALLED) */
+    .spec-vault {
+      border: 2px solid var(--ink);
+      background-color: #FFFFFF;
+      padding: 24px;
+      margin-top: 36px;
+    }
+
+    .vault-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+
+    .vault-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .module-card {
+      border: var(--border-ink);
+      background-color: var(--paper);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .module-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #DCDCD7;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+    }
+
+    .module-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      background: #FFFFFF;
+      border: var(--border-ink);
+      padding: 2px 6px;
+      font-weight: 600;
+    }
+
+    .locked-terminal {
+      background-color: var(--ink);
+      color: #FFFFFF;
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-unlock {
+      background-color: var(--red);
+      color: #FFFFFF;
+      border: none;
+      padding: 8px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-unlock:hover {
+      background-color: var(--red-hover);
+    }
+
+    /* SIDEBAR */
+    .sidebar-block {
+      border: var(--border-ink);
+      background-color: #FFFFFF;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .sidebar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 900;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mortality-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #E5E5E0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .mortality-item:last-child {
+      border-bottom: none;
+    }
+
+    .ornament {
+      text-align: center;
+      font-size: 20px;
+      color: var(--red);
+      letter-spacing: 1em;
+      padding: 24px 0;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 2px solid var(--ink);
+      padding-top: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="broadsheet-wrapper">
+    <!-- TOP BULLETIN TICKER -->
+    <div class="top-bulletin">
+      <div>
+        <span class="badge-red">BULLETIN</span>
+        <span>THE SECOND RUN DISPATCH · FORENSIC STARTUP MORTALITY ARCHIVE · 1,200+ AUTOPSIES</span>
+      </div>
+      <div>
+        <span class="text-red">PRICE: $89 LIFETIME ACCESS</span>
+        <span>· STRICTLY NO REFUNDS</span>
+      </div>
+    </div>
+
+    <!-- GRAND MASTHEAD -->
+    <header class="masthead">
+      <div class="masthead-meta">
+        <span>VOL. CXXIV · NO. 42</span>
+        <span style="font-family: 'Lora', serif; font-style: italic; text-transform: none; font-size: 13px;">
+          "All the Mortalities Worth Resurrecting"
+        </span>
+        <span>EDITION: GLOBAL REPOSITORIES</span>
+      </div>
+
+      <h1 class="masthead-title">THE SECOND RUN</h1>
+
+      <div class="masthead-subline">
+        <span>NEW YORK, LONDON &amp; SAN FRANCISCO</span>
+        <span class="text-red">SPECIAL POST-MORTEM DOSSIER</span>
+        <span>SUNDAY · SEPTEMBER 2026</span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="broadsheet-nav">
+      <div class="nav-links">
+        <a href="/">[ FRONT PAGE ]</a>
+        <a href="/browse">THE MORGUE (1,200)</a>
+        <a href="/latest">RECENT CASUALTIES</a>
+        <a href="/pricing" style="color: var(--red);">SUBSCRIBE ($89 PASS)</a>
+      </div>
+      <div style="font-size: 10px; color: var(--ink-muted);">
+        WEATHER: SEVERE CHURN FOR VENTURE MONOLITHS · HIGH MARGINS FOR AGENT STACKS
+      </div>
+    </nav>
+
+    <!-- BROADSHEET GRID -->
+    <div class="broadsheet-grid">
+      <!-- MAIN INVESTIGATIVE ARTICLE (8 COLS) -->
+      <article class="main-story">
+        <div class="kicker">SPECIAL INVESTIGATIVE REPORT · AUTOPSY NO. 049</div>
+        <h2 class="headline">HOW ATRIUM BURNED $75.5M TRYING TO SUBSIDIZE BILLABLE LAWYERS</h2>
+        <div class="deck">
+          Justin Kan promised founders an automated legal machine to commoditize Series A financings. 
+          Instead, they built a bloated boutique law firm with an iPad in the lobby and a fatal $1.2 million monthly cash burn.
+        </div>
+
+        <div class="byline-bar">
+          <span>BY SENIOR FORENSIC CORRESPONDENT</span>
+          <span>SAN FRANCISCO BUREAU · 12 MINUTE READ</span>
+        </div>
+
+        <div class="story-columns">
+          <div>
+            <p>
+              <span class="drop-cap">W</span>hen Atrium raised $75.5 million from Andreessen Horowitz and General Catalyst in 2017, 
+              Silicon Valley hailed it as the long-overdue commoditization of corporate law. 
+              Justin Kan, celebrated co-founder of Twitch, articulated an undeniable thesis: early-stage founders loathe opaque hourly billing, 
+              while corporate paralegals spend four-fifths of their careers copy-pasting SAFEs, 83(b) tax elections, and Delaware franchise renewals.
+            </p>
+            <p>
+              Software should have automated this routine legal bureaucracy with 95% gross margins. Yet by early 2020, 
+              Atrium dissolved, laying off its remaining staff and returning what residual capital remained in its accounts.
+            </p>
+            <p>
+              The structural fatal flaw was immediate: by attempting to provide the licensed attorneys alongside the software tooling, 
+              Atrium trapped itself inside the regulatory bar. California law prohibits non-attorneys from owning legal partnerships, forcing Atrium 
+              into a bifurcated corporate structure: a venture-backed tech firm and a dedicated, salaried law firm.
+            </p>
+          </div>
+
+          <div>
+            <p>
+              Rather than standardizing software, customer acquisition required human attorney consultations, partner-level reviews, and custom billing negotiations. 
+              The moment customer headcount exceeded 400 early-stage startups, customer acquisition costs skyrocketed beyond $3,500 per logo.
+            </p>
+            <p>
+              Monthly burn reached an astronomical $1,260,000, nearly all consumed by senior associate payroll and bespoke service delivery. 
+              Instead of an exponential software platform, they had engineered an expensive, capital-inefficient service boutique with a Silicon Valley valuation multiple.
+            </p>
+            <p>
+              In 2026, the entire value proposition of Atrium can be rebuilt by a single software engineer in 48 hours using an autonomous Next.js App Router stack, 
+              Prisma multi-tenant schema isolation, and automated LLM contract generation. The 25,000x cost inversion is absolute.
+            </p>
+          </div>
+        </div>
+
+        <!-- PULL QUOTE -->
+        <div class="pull-quote">
+          <blockquote>
+            &ldquo;They didn&apos;t build a software company. They built an expensive law firm with high-end Herman Miller chairs and a venture cap table.&rdquo;
+          </blockquote>
+          <cite>— Former Atrium Senior Associate, 2020</cite>
+        </div>
+
+        <!-- OPERATING INVERSION TABLE -->
+        <div class="table-container">
+          <div class="table-header">
+            <span>FIGURE 1.0 · THE 25,000X COST INVERSION</span>
+            <span class="text-red">96% GROSS MARGIN</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Operating Dimension</th>
+                <th>Atrium (2017 Monolith)</th>
+                <th style="background-color: var(--red); color: white;">2026 Micro-SaaS Rebuild</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Workforce</strong></td>
+                <td class="text-burn">120 Salaried Attorneys &amp; Paralegals</td>
+                <td class="text-red">0 Humans · 100% Autonomous LLM Engine</td>
+              </tr>
+              <tr>
+                <td><strong>Customer Acquisition</strong></td>
+                <td class="text-burn">Bespoke Sales Demos (CAC &gt; $3,500)</td>
+                <td class="text-red">Product-Led SEO Pages (CAC &lt; $20)</td>
+              </tr>
+              <tr>
+                <td><strong>Monthly Overhead</strong></td>
+                <td class="text-burn">$1,260,000 / month</td>
+                <td class="text-red">&lt; $50 / month Serverless Edge</td>
+              </tr>
+              <tr>
+                <td><strong>Gross Operating Margin</strong></td>
+                <td class="text-burn">32% (Law Firm Labor Economics)</td>
+                <td class="text-red">96% (Autonomous Software Leverage)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- PAYWALLED SPECIFICATION VAULT -->
+        <div class="spec-vault">
+          <div class="vault-header">
+            <div>
+              <span class="badge-red" style="font-size: 10px;">RESTRICTED ARCHIVE</span>
+              <div class="vault-title" style="margin-top: 4px;">The 5-Module Rebuild Specification Suite</div>
+            </div>
+            <div style="text-align: right; font-family: 'JetBrains Mono', monospace;">
+              <div style="font-size: 22px; font-weight: 900; color: var(--red);">$89.00</div>
+              <div style="font-size: 10px; text-transform: uppercase; color: var(--ink-muted);">Lifetime Pass</div>
+            </div>
+          </div>
+
+          <p style="font-size: 13px; color: var(--ink-muted); margin-bottom: 20px;">
+            Below are the 5 production prompt modules for Atrium, stacked sequentially from infrastructure schemas and design tokens down to agent governance, TDD tickets, and zero-sales distribution.
+          </p>
+
+          <!-- Module 1 -->
+          <div class="module-card">
+            <div class="module-card-header">
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--red); font-weight: 700;">
+                  MODULE 01 OF 05 · 3,420 WORDS · 148 LINES
+                </div>
+                <div style="font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700;">
+                  Anti-Death Master Architecture &amp; Backend Spec
+                </div>
+              </div>
+              <span class="module-pill">Cursor / Claude 3.7</span>
+            </div>
+            <div style="font-size: 12px; color: var(--ink-muted); margin-bottom: 8px;">
+              Full Next.js 14 App Router, Prisma ORM schema, multi-tenant isolation, negative engineering bounds, and HMAC webhook endpoints.
+            </div>
+            <div class="locked-terminal">
+              <div>
+                <span class="text-red">[LOCKED SPECIFICATION]</span>
+                <span style="color: #999999; margin-left: 8px;">Paywalled payload: Complete runnable Prisma schema and architecture bounds.</span>
+              </div>
+              <a href="/pricing" class="btn-unlock">Unlock ($89)</a>
+            </div>
+          </div>
+
+          <!-- Module 2 -->
+          <div class="module-card">
+            <div class="module-card-header">
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--red); font-weight: 700;">
+                  MODULE 02 OF 05 · 1,980 WORDS · 92 LINES
+                </div>
+                <div style="font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700;">
+                  Design &amp; Frontend UI System Prompt
+                </div>
+              </div>
+              <span class="module-pill">v0.dev / Composer</span>
+            </div>
+            <div style="font-size: 12px; color: var(--ink-muted); margin-bottom: 8px;">
+              Complete broadsheet newsprint typography, Tailwind component trees, subscriber command center, and high-density data tables.
+            </div>
+            <div class="locked-terminal">
+              <div>
+                <span class="text-red">[LOCKED SPECIFICATION]</span>
+                <span style="color: #999999; margin-left: 8px;">Paywalled payload: Complete UI prompt, component hierarchy, and CSS variables.</span>
+              </div>
+              <a href="/pricing" class="btn-unlock">Unlock ($89)</a>
+            </div>
+          </div>
+
+          <!-- Module 3 -->
+          <div class="module-card">
+            <div class="module-card-header">
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--red); font-weight: 700;">
+                  MODULE 03 OF 05 · 1,450 WORDS · 86 LINES
+                </div>
+                <div style="font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700;">
+                  Autonomous Agent System Directives (AGENTS.md)
+                </div>
+              </div>
+              <span class="module-pill">Claude Code / Windsurf</span>
+            </div>
+            <div style="font-size: 12px; color: var(--ink-muted); margin-bottom: 8px;">
+              Strict builder persona, zero-human service constraint, self-correction test loops, and multi-file refactor governance.
+            </div>
+            <div class="locked-terminal">
+              <div>
+                <span class="text-red">[LOCKED SPECIFICATION]</span>
+                <span style="color: #999999; margin-left: 8px;">Paywalled payload: Complete AGENTS.md rules and execution constraints.</span>
+              </div>
+              <a href="/pricing" class="btn-unlock">Unlock ($89)</a>
+            </div>
+          </div>
+
+          <!-- Module 4 -->
+          <div class="module-card">
+            <div class="module-card-header">
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--red); font-weight: 700;">
+                  MODULE 04 OF 05 · 2,150 WORDS · 114 LINES
+                </div>
+                <div style="font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700;">
+                  Progressive TDD Implementation Plan
+                </div>
+              </div>
+              <span class="module-pill">Cursor / Copilot</span>
+            </div>
+            <div style="font-size: 12px; color: var(--ink-muted); margin-bottom: 8px;">
+              9 atomic engineering tickets executed strictly step-by-step with precondition verifications, test cases, and assertion checks.
+            </div>
+            <div class="locked-terminal">
+              <div>
+                <span class="text-red">[LOCKED SPECIFICATION]</span>
+                <span style="color: #999999; margin-left: 8px;">Paywalled payload: 9 atomic tickets and automated test assertions.</span>
+              </div>
+              <a href="/pricing" class="btn-unlock">Unlock ($89)</a>
+            </div>
+          </div>
+
+          <!-- Module 5 -->
+          <div class="module-card">
+            <div class="module-card-header">
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--red); font-weight: 700;">
+                  MODULE 05 OF 05 · 1,620 WORDS · 78 LINES
+                </div>
+                <div style="font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700;">
+                  Zero-Sales Product-Led GTM Playbook
+                </div>
+              </div>
+              <span class="module-pill">Autonomous GTM / SEO</span>
+            </div>
+            <div style="font-size: 12px; color: var(--ink-muted); margin-bottom: 8px;">
+              Programmatic competitor teardown SEO engine, 60-second frictionless onboarding, and self-serve checkout funnel with zero sales calls.
+            </div>
+            <div class="locked-terminal">
+              <div>
+                <span class="text-red">[LOCKED SPECIFICATION]</span>
+                <span style="color: #999999; margin-left: 8px;">Paywalled payload: Complete GTM programmatic SEO templates and distribution loops.</span>
+              </div>
+              <a href="/pricing" class="btn-unlock">Unlock ($89)</a>
+            </div>
+          </div>
+
+          <!-- Master Unlock Action -->
+          <div style="background-color: var(--red-light); border: 2px solid var(--red); padding: 20px; text-align: center; margin-top: 20px;">
+            <div style="font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; color: var(--ink);">
+              Unlock All 5 Modules with the $89 Lifetime Pass
+            </div>
+            <p style="font-size: 12px; color: var(--ink-muted); margin: 6px 0 16px;">
+              Instant unlock for Atrium and all 1,200+ startup rebuild dossiers. No subscriptions. No recurring fees.
+            </p>
+            <a href="/pricing" class="btn-unlock" style="padding: 12px 28px; font-size: 12px;">
+              Claim All-Access Lifetime Pass ($89) →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- SIDEBAR MARGINALIA (4 COLS) -->
+      <aside>
+        <!-- MORTALITY LEDGER -->
+        <div class="sidebar-block">
+          <div class="sidebar-title">
+            <span>THE MORGUE LEDGER</span>
+            <span class="badge-red" style="font-size: 9px;">LIVE</span>
+          </div>
+          <div style="font-size: 11px; color: var(--ink-muted); margin-bottom: 12px;">
+            Certified autopsies and resurrection feasibility audits recorded across the global tech morgue.
+          </div>
+
+          <div class="mortality-item">
+            <div style="display: flex; justify-content: space-between; font-weight: 700;">
+              <a href="/company/fast" style="color: var(--ink); text-decoration: underline;">FAST.CO</a>
+              <span class="text-burn">$102M BURNED</span>
+            </div>
+            <div style="color: var(--ink-muted); font-family: 'Lora', serif; margin: 2px 0;">
+              Burned $10M/month on $600K revenue chasing 1-click checkout.
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-light);">
+              <span>DEATH: 2022</span>
+              <span class="text-red">FEASIBILITY: 94/100</span>
+            </div>
+          </div>
+
+          <div class="mortality-item">
+            <div style="display: flex; justify-content: space-between; font-weight: 700;">
+              <a href="/company/pebble" style="color: var(--ink); text-decoration: underline;">PEBBLE</a>
+              <span class="text-burn">$40M BURNED</span>
+            </div>
+            <div style="color: var(--ink-muted); font-family: 'Lora', serif; margin: 2px 0;">
+              Hardware inventory cycle crushed by Apple Watch entry.
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-light);">
+              <span>DEATH: 2016</span>
+              <span class="text-red">FEASIBILITY: 88/100</span>
+            </div>
+          </div>
+
+          <div class="mortality-item">
+            <div style="display: flex; justify-content: space-between; font-weight: 700;">
+              <a href="/company/higherme" style="color: var(--ink); text-decoration: underline;">HIGHERME</a>
+              <span class="text-burn">$14M BURNED</span>
+            </div>
+            <div style="color: var(--ink-muted); font-family: 'Lora', serif; margin: 2px 0;">
+              Manual retail employee screening choked by headcount.
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-light);">
+              <span>DEATH: 2023</span>
+              <span class="text-red">FEASIBILITY: 96/100</span>
+            </div>
+          </div>
+
+          <div class="mortality-item">
+            <div style="display: flex; justify-content: space-between; font-weight: 700;">
+              <a href="/company/rdio" style="color: var(--ink); text-decoration: underline;">RDIO</a>
+              <span class="text-burn">$125M BURNED</span>
+            </div>
+            <div style="color: var(--ink-muted); font-family: 'Lora', serif; margin: 2px 0;">
+              Crushed by record label minimum guarantees vs Spotify.
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-light);">
+              <span>DEATH: 2015</span>
+              <span class="text-red">FEASIBILITY: 82/100</span>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+            <a href="/browse" style="color: var(--ink); font-weight: 700; text-transform: uppercase;">
+              Browse Complete Morgue (1,200+) →
+            </a>
+          </div>
+        </div>
+
+        <!-- TELEGRAPHIC ADVICE -->
+        <div class="sidebar-block" style="background-color: var(--paper-tint);">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 4px;">
+            TELEGRAPHIC ADVICE · DISPATCH #18
+          </div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; margin-bottom: 8px;">
+            On The Fallacy of Venture Headcount
+          </div>
+          <p style="font-size: 12px; color: #333333; line-height: 1.5; text-align: justify;">
+            &ldquo;Every venture dollar accepted in 2017 obligated a startup to hire five human coordinators to justify 
+            the fund size. In 2026, every additional human on payroll before reaching $1M ARR is an unforced error. 
+            Let the autonomous agents run alone.&rdquo;
+          </p>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-light); text-align: right; margin-top: 6px;">
+            — SecondRun Editorial Board
+          </div>
+        </div>
+
+        <!-- VINTAGE CLASSIFIED -->
+        <div class="sidebar-block" style="border: 2px dashed var(--ink); text-align: center;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; color: var(--red); font-weight: 700; letter-spacing: 0.15em;">
+            PUBLIC NOTICE &amp; NOTICE TO FOUNDERS
+          </div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; margin: 6px 0 10px;">
+            TO HACKERS &amp; SOFTWARE BUILDERS
+          </div>
+          <p style="font-size: 12px; color: var(--ink-muted); text-align: justify; margin-bottom: 16px;">
+            Cease the futile pursuit of unproven consumer fads. 1,200 validated software markets have already spent billions proving that customer demand exists.
+            We supply the post-mortems, the exact failure points to avoid, and the ready-to-run Cursor specifications.
+          </p>
+          <a href="/pricing" class="btn-unlock" style="width: 100%; text-align: center; padding: 10px 0;">
+            Claim Lifetime Access ($89)
+          </a>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-light); margin-top: 6px;">
+            Strictly No Refunds · Final Sale
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ORNAMENTAL SERIF DIVIDER -->
+    <div class="ornament">
+      ✦ ✦ ✦
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>THE SECOND RUN DISPATCH · ARCHIVAL EDITION</div>
+      <div>&copy; 2026 SECOND RUN · ALL RIGHTS RESERVED</div>
+    </footer>
+  </div>
+
+</body>
+</html>

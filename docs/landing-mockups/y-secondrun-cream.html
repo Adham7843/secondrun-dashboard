@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecondRun — The Startup Morgue File</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        cream: '#F6F1E7',
+        ink: '#1C1917',
+        muted: '#78716C',
+        hairline: '#E7E0D2',
+        card: '#FFFFFF',
+        brand: '#1F6B3A',
+      },
+      fontFamily: {
+        display: ['Fraunces', 'Georgia', 'serif'],
+        body: ['Inter', 'Helvetica Neue', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'Courier New', 'monospace'],
+      }
+    }
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700;1,9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { border-radius: 0 !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #F6F1E7;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='2' cy='2' r='1' fill='%231C1917' fill-opacity='0.07'/%3E%3C/svg%3E");
+    color: #1C1917;
+    font-family: 'Inter', Helvetica Neue, sans-serif;
+  }
+  .lift { transition: transform 200ms ease-out, box-shadow 200ms ease-out; }
+  .lift:hover { box-shadow: 5px 5px 0 0 #1C1917; transform: translate(-2px, -2px); }
+  .lift-green:hover { box-shadow: 5px 5px 0 0 #1F6B3A; }
+  .btn-green { background: #1F6B3A; color: #FFFFFF; border: 1px solid #1F6B3A; transition: all 200ms ease-out; }
+  .btn-green:hover { background: #FFFFFF; color: #1F6B3A; }
+  .btn-outline { border: 1px solid #1C1917; background: transparent; color: #1C1917; transition: all 200ms ease-out; }
+  .btn-outline:hover { background: #1C1917; color: #F6F1E7; }
+  .nav-link { transition: color 200ms ease-out; }
+  .nav-link:hover { color: #1F6B3A; }
+  .read-link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; text-decoration-color: #1F6B3A; }
+  .read-link:hover { background: #1C1917; color: #F6F1E7; text-decoration-color: #1C1917; }
+  .kicker { color: #1F6B3A; }
+  .stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; padding: 3px 10px; transform: rotate(-2deg); }
+  .stamp-inactive { background: #1C1917; color: #FFFFFF; border: 1px solid #1C1917; }
+  .stamp-acquired { background: transparent; color: #1C1917; border: 1px solid #1C1917; }
+  .stamp-active { background: #1F6B3A; color: #FFFFFF; border: 1px solid #1F6B3A; }
+  .stamp-reco { background: #1F6B3A; color: #FFFFFF; border: 1px solid #1F6B3A; transform: rotate(-2deg); }
+  .ticker-track { display: inline-flex; white-space: nowrap; animation: ticker 26s linear infinite; }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  details summary::-webkit-details-marker { display: none; }
+  details summary .faq-icon { transition: transform 200ms ease-out; }
+  details[open] summary .faq-icon { transform: rotate(45deg); }
+  .paywall-cut { position: relative; }
+  @media (max-width: 767px) { .grid-border-r { border-right: none !important; } }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- 1. MASTHEAD -->
+<header class="border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="flex items-center justify-between py-2 border-b border-ink font-mono text-[11px] uppercase tracking-widest text-muted">
+      <span>Vol. 1 &middot; The Startup Morgue File</span>
+      <span class="hidden sm:inline">Filed daily &middot; Every failure legible</span>
+      <span>Edition No. 002</span>
+    </div>
+    <div class="flex items-center justify-between gap-4 py-4">
+      <a href="#" class="font-display font-black text-3xl sm:text-4xl lg:text-5xl tracking-tighter leading-none">SecondRun</a>
+      <nav class="hidden md:flex items-center gap-8 font-body text-xs font-semibold uppercase tracking-widest" aria-label="Primary">
+        <a href="#contents" class="nav-link">Contents</a>
+        <a href="#dossiers" class="nav-link">Dossiers</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+      </nav>
+      <a href="#pricing" class="btn-green font-body text-xs font-semibold uppercase tracking-widest px-5 py-3 min-h-[44px] inline-flex items-center whitespace-nowrap">Start reading — free</a>
+    </div>
+    <nav class="md:hidden flex items-center gap-6 pb-4 font-body text-xs font-semibold uppercase tracking-widest overflow-x-auto" aria-label="Mobile">
+      <a href="#contents" class="nav-link whitespace-nowrap">Contents</a>
+      <a href="#dossiers" class="nav-link whitespace-nowrap">Dossiers</a>
+      <a href="#pricing" class="nav-link whitespace-nowrap">Pricing</a>
+      <a href="#faq" class="nav-link whitespace-nowrap">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 2. TICKER -->
+<div class="bg-ink text-cream overflow-hidden border-b border-ink" aria-hidden="true">
+  <div class="py-2 font-mono text-xs tracking-widest uppercase">
+    <div class="ticker-track">
+      <span class="px-2">1,200+ AUTOPSIES FILED <span class="px-2" style="color:#1F6B3A;">·</span> EVERY DOSSIER = PROFILE + AUTOPSY + REBUILD PLAN <span class="px-2" style="color:#1F6B3A;">·</span> PRO $19/MO <span class="px-2" style="color:#1F6B3A;">·</span>&nbsp;</span>
+      <span class="px-2">1,200+ AUTOPSIES FILED <span class="px-2" style="color:#1F6B3A;">·</span> EVERY DOSSIER = PROFILE + AUTOPSY + REBUILD PLAN <span class="px-2" style="color:#1F6B3A;">·</span> PRO $19/MO <span class="px-2" style="color:#1F6B3A;">·</span>&nbsp;</span>
+      <span class="px-2">1,200+ AUTOPSIES FILED <span class="px-2" style="color:#1F6B3A;">·</span> EVERY DOSSIER = PROFILE + AUTOPSY + REBUILD PLAN <span class="px-2" style="color:#1F6B3A;">·</span> PRO $19/MO <span class="px-2" style="color:#1F6B3A;">·</span>&nbsp;</span>
+      <span class="px-2">1,200+ AUTOPSIES FILED <span class="px-2" style="color:#1F6B3A;">·</span> EVERY DOSSIER = PROFILE + AUTOPSY + REBUILD PLAN <span class="px-2" style="color:#1F6B3A;">·</span> PRO $19/MO <span class="px-2" style="color:#1F6B3A;">·</span>&nbsp;</span>
+    </div>
+  </div>
+</div>
+
+<!-- 3. HERO -->
+<section class="border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-12 lg:py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-7 lg:border-r lg:border-ink lg:pr-10">
+        <p class="kicker font-mono text-xs uppercase tracking-widest mb-4"><span class="inline-block w-2 h-2 mr-2" style="background:#1F6B3A;"></span>DEAD STARTUPS, FILED AND EXPLAINED</p>
+        <h1 class="font-display font-black tracking-tighter leading-[0.95] text-5xl sm:text-6xl lg:text-7xl">Don&rsquo;t pay for your own <em class="italic" style="color:#1F6B3A;">autopsy.</em></h1>
+        <p class="font-body text-base lg:text-lg leading-relaxed mt-6 text-ink">SecondRun is a library of 1,200+ dead-startup autopsies. Browse free. Pay $19/mo to unlock every full teardown, rebuild plan, and agent-ready prompt.</p>
+        <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+          <a href="#dossiers" class="btn-green font-body text-xs font-semibold uppercase tracking-widest px-8 py-4 min-h-[44px] inline-flex items-center justify-center w-full sm:w-auto">Browse the graveyard — free</a>
+          <span class="font-mono text-[11px] uppercase tracking-widest text-muted">FREE FOREVER · NO SIGNUP</span>
+        </div>
+        <p class="font-mono text-[11px] uppercase tracking-widest text-muted mt-6 border-t border-hairline pt-4">42 batches indexed · New filings weekly · Each file: profile + autopsy + rebuild plan</p>
+      </div>
+      <aside class="lg:col-span-5">
+        <p class="font-mono text-xs uppercase tracking-widest text-muted mb-3">Featured dossier · Fig. 1.1</p>
+        <article class="border border-ink bg-card p-0 lift">
+          <div class="p-6 pb-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-mono text-xs uppercase tracking-widest px-2 py-0.5 border border-ink">Batch W15</span>
+              <span class="stamp stamp-acquired">ACQUIRED</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl lg:text-3xl">HigherMe</h2>
+            <p class="font-body text-sm text-ink mt-1">Restaurant-hiring software, acqui-hired out of independence.</p>
+            <p class="font-mono text-[11px] uppercase tracking-widest text-muted mt-3">Founders: Rob Hunter, Jeffery G. · Filed this week</p>
+          </div>
+          <div class="border-t border-ink px-6 py-4">
+            <p class="font-body text-sm leading-relaxed">The teardown shows a single-channel dependency on walk-in restaurant traffic — and when that channel froze, the unit economics never recovered.</p>
+          </div>
+          <div class="paywall-cut border-t border-ink">
+            <div class="px-6 py-4 bg-cream border-b border-dashed border-ink">
+              <p class="font-mono text-[11px] uppercase tracking-widest text-muted">Full autopsy · Rebuild plan · Agent prompt</p>
+              <p class="font-body text-sm mt-1">Locked on free. <a href="#pricing" class="read-link font-semibold uppercase text-xs tracking-widest">Unlock with Pro →</a></p>
+            </div>
+            <div class="flex items-center justify-between bg-ink text-cream px-4 py-2">
+              <span class="font-mono text-[11px] uppercase tracking-widest">Rebuild prompt (preview)</span>
+              <button id="copyBtn" type="button" class="font-mono text-[11px] uppercase tracking-widest underline underline-offset-4 min-h-[44px] min-w-[44px] px-2" aria-label="Copy rebuild prompt">Copy</button>
+            </div>
+            <pre id="rebuildSnippet" class="font-mono text-xs leading-relaxed p-4 overflow-x-auto bg-card">Rebuild HigherMe for 2026: SMB hiring, WhatsApp-first apply flow, $49/mo flat. Avoid single-channel risk.</pre>
+          </div>
+        </article>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 4. WHAT YOU'RE BUYING -->
+<section id="contents" class="border-b-4 border-ink bg-card">
+  <div class="max-w-screen-xl mx-auto px-4 py-14">
+    <div class="flex items-end justify-between border-b-4 border-ink pb-4">
+      <div>
+        <p class="kicker font-mono text-xs uppercase tracking-widest mb-2">What you&rsquo;re buying</p>
+        <h2 class="font-display font-black text-4xl lg:text-5xl tracking-tight">Every dossier contains four parts.</h2>
+      </div>
+      <span class="hidden sm:inline font-mono text-xs uppercase tracking-widest text-muted">No fluff · Just the file</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-l border-t border-ink mt-0">
+      <article class="border-r border-b border-ink p-6 bg-card lift grid-border-r">
+        <p class="font-display font-black text-4xl" style="color:#1F6B3A;">01</p>
+        <h3 class="font-display font-bold text-xl mt-3">Company profile</h3>
+        <p class="font-body text-sm leading-relaxed mt-2 text-ink">Batch, founders, status. Who they were before they died.</p>
+      </article>
+      <article class="border-r border-b border-ink p-6 bg-card lift grid-border-r">
+        <p class="font-display font-black text-4xl" style="color:#1F6B3A;">02</p>
+        <h3 class="font-display font-bold text-xl mt-3">Full autopsy</h3>
+        <p class="font-body text-sm leading-relaxed mt-2 text-ink">What it built, how it died. Cause of death, with receipts.</p>
+      </article>
+      <article class="border-r border-b border-ink p-6 bg-card lift grid-border-r">
+        <p class="font-display font-black text-4xl" style="color:#1F6B3A;">03</p>
+        <h3 class="font-display font-bold text-xl mt-3">Rebuild plan</h3>
+        <p class="font-body text-sm leading-relaxed mt-2 text-ink">How you&rsquo;d survive it. The wedge, the spec, the failure modes to dodge.</p>
+      </article>
+      <article class="border-r border-b border-ink p-6 bg-card lift grid-border-r">
+        <p class="font-display font-black text-4xl" style="color:#1F6B3A;">04</p>
+        <h3 class="font-display font-bold text-xl mt-3">Agent prompt</h3>
+        <p class="font-body text-sm leading-relaxed mt-2 text-ink">Paste into your AI coder. Scaffold the second attempt today.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 5. THIS WEEK'S AUTOPSIES -->
+<section id="dossiers" class="border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-14">
+    <div class="flex items-end justify-between border-b-4 border-ink pb-4">
+      <div>
+        <p class="kicker font-mono text-xs uppercase tracking-widest mb-2">Fresh from the morgue</p>
+        <h2 class="font-display font-black text-4xl lg:text-5xl tracking-tight">This week&rsquo;s autopsies</h2>
+      </div>
+      <span class="hidden sm:inline font-mono text-xs uppercase tracking-widest text-muted">3 fresh filings</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 border-l border-t border-ink mt-0">
+      <article class="border-r border-b border-ink p-6 lift bg-card grid-border-r">
+        <span class="stamp stamp-acquired">ACQUIRED</span>
+        <h3 class="font-display font-bold text-2xl mt-4">HigherMe <span class="font-mono text-xs font-normal text-muted">W15</span></h3>
+        <p class="font-body text-sm leading-relaxed mt-2">Restaurant-hiring software that traded independence for an acqui-hire. Single-channel risk killed it.</p>
+        <a href="#" class="read-link font-body text-xs font-semibold uppercase tracking-widest mt-4 inline-block">Read file &rarr;</a>
+      </article>
+      <article class="border-r border-b border-ink p-6 lift bg-card grid-border-r">
+        <span class="stamp stamp-inactive">INACTIVE</span>
+        <h3 class="font-display font-bold text-2xl mt-4">LunchBadger <span class="font-mono text-xs font-normal text-muted">W18</span></h3>
+        <p class="font-body text-sm leading-relaxed mt-2">Office lunch delivery that starved on route density and thin margins.</p>
+        <a href="#" class="read-link font-body text-xs font-semibold uppercase tracking-widest mt-4 inline-block">Read file &rarr;</a>
+      </article>
+      <article class="border-r border-b border-ink p-6 lift bg-card grid-border-r">
+        <span class="stamp stamp-active">ACTIVE</span>
+        <h3 class="font-display font-bold text-2xl mt-4">Shipwise <span class="font-mono text-xs font-normal text-muted">S21</span></h3>
+        <p class="font-body text-sm leading-relaxed mt-2">Micro-SaaS analytics that drowned in a sea of dashboards nobody opened.</p>
+        <a href="#" class="read-link font-body text-xs font-semibold uppercase tracking-widest mt-4 inline-block">Read file &rarr;</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 6. INVERTED INK NUMBERS -->
+<section class="bg-ink text-cream border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-14">
+    <p class="kicker font-mono text-xs uppercase tracking-widest mb-2">The ledger so far</p>
+    <h2 class="font-display font-black text-4xl lg:text-5xl tracking-tight">Counted, filed, cross-referenced.</h2>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-0 mt-10 border-l border-t border-cream">
+      <div class="border-r border-b border-cream p-6">
+        <p class="font-mono font-bold text-3xl lg:text-4xl">1,200+</p>
+        <p class="font-mono text-[11px] uppercase tracking-widest mt-2 opacity-70">Autopsies filed</p>
+      </div>
+      <div class="border-r border-b border-cream p-6">
+        <p class="font-mono font-bold text-3xl lg:text-4xl">42</p>
+        <p class="font-mono text-[11px] uppercase tracking-widest mt-2 opacity-70">Batches covered</p>
+      </div>
+      <div class="border-r border-b border-cream p-6">
+        <p class="font-mono font-bold text-3xl lg:text-4xl">87</p>
+        <p class="font-mono text-[11px] uppercase tracking-widest mt-2 opacity-70">Causes of death indexed</p>
+      </div>
+      <div class="border-r border-b border-cream p-6">
+        <p class="font-mono font-bold text-3xl lg:text-4xl">310</p>
+        <p class="font-mono text-[11px] uppercase tracking-widest mt-2 opacity-70">Rebuild plans shipped</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. PRICING LEDGER -->
+<section id="pricing" class="border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-14">
+    <p class="kicker font-mono text-xs uppercase tracking-widest mb-2">The price list</p>
+    <h2 class="font-display font-black text-4xl lg:text-5xl tracking-tight">Two ways to read.</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 mt-10 border-l border-t border-ink">
+      <article class="border-r border-b border-ink bg-card p-8 lift grid-border-r">
+        <p class="font-mono text-xs uppercase tracking-widest text-muted">Free — The Browser</p>
+        <p class="mt-4"><span class="font-display font-black text-5xl">$0</span> <span class="font-mono text-xs uppercase tracking-widest text-muted">/ forever</span></p>
+        <ul class="mt-6 font-body text-sm leading-relaxed">
+          <li class="py-3 border-t border-dashed border-ink">Browse the full graveyard</li>
+          <li class="py-3 border-t border-dashed border-ink">Company &amp; founder profiles</li>
+          <li class="py-3 border-t border-dashed border-ink">3 sample full reports</li>
+          <li class="py-3 border-y border-dashed border-ink">Teardown previews on every file</li>
+        </ul>
+        <a href="#" class="btn-outline mt-8 inline-flex items-center justify-center w-full font-body text-xs font-semibold uppercase tracking-widest px-6 py-4 min-h-[44px]">Start reading — free</a>
+      </article>
+      <article class="border-r border-b border-ink bg-card p-8 lift lift-green grid-border-r" style="border-width:2px;">
+        <p class="font-mono text-xs uppercase tracking-widest"><span class="stamp stamp-reco">★ RECOMMENDED</span></p>
+        <p class="mt-4"><span class="font-display font-black text-5xl">$19</span> <span class="font-mono text-xs uppercase tracking-widest text-muted">/ mo</span></p>
+        <p class="font-mono text-xs uppercase tracking-widest mt-1" style="color:#1F6B3A;">or $14/mo billed annually</p>
+        <ul class="mt-6 font-body text-sm leading-relaxed">
+          <li class="py-3 border-t border-dashed border-ink">Every full teardown, unlocked</li>
+          <li class="py-3 border-t border-dashed border-ink">Rebuild plans + technical specs</li>
+          <li class="py-3 border-t border-dashed border-ink">5 fresh requests / month</li>
+          <li class="py-3 border-y border-dashed border-ink">Agent-ready prompts</li>
+        </ul>
+        <a href="#" class="btn-green font-body text-xs font-semibold uppercase tracking-widest px-6 py-4 min-h-[44px] mt-8 inline-flex items-center justify-center w-full">Go Pro — $19/mo</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section id="faq" class="border-b-4 border-ink">
+  <div class="max-w-screen-xl mx-auto px-4 py-14">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-4">
+        <p class="kicker font-mono text-xs uppercase tracking-widest mb-2">Letters to the editor</p>
+        <h2 class="font-display font-black text-4xl lg:text-5xl tracking-tight">Questions, answered.</h2>
+      </div>
+      <div class="lg:col-span-8">
+        <div class="border-t-2 border-ink">
+          <details class="border-b border-ink">
+            <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none min-h-[44px]">
+              <span class="font-display font-bold text-xl">Is it only YC startups?</span>
+              <span class="faq-icon font-mono text-2xl leading-none select-none">+</span>
+            </summary>
+            <p class="font-body text-sm leading-relaxed pb-6 pr-10">We started with YC because its batches are the best-documented graveyard in tech. We are expanding to every accelerator and indie shutdown with a paper trail.</p>
+          </details>
+          <details class="border-b border-ink">
+            <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none min-h-[44px]">
+              <span class="font-display font-bold text-xl">What is a rebuild plan?</span>
+              <span class="faq-icon font-mono text-2xl leading-none select-none">+</span>
+            </summary>
+            <p class="font-body text-sm leading-relaxed pb-6 pr-10">A concrete second attempt: the wedge the original missed, a technical spec for 2026 tooling, and the failure modes to avoid — so you don&rsquo;t die the same way.</p>
+          </details>
+          <details class="border-b border-ink">
+            <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none min-h-[44px]">
+              <span class="font-display font-bold text-xl">Can I request a startup?</span>
+              <span class="faq-icon font-mono text-2xl leading-none select-none">+</span>
+            </summary>
+            <p class="font-body text-sm leading-relaxed pb-6 pr-10">Yes. Pro members file up to 5 fresh requests a month, and our researchers pull the filings, interviews, and post-mortems into a new dossier.</p>
+          </details>
+          <details class="border-b border-ink">
+            <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none min-h-[44px]">
+              <span class="font-display font-bold text-xl">Do I install anything?</span>
+              <span class="faq-icon font-mono text-2xl leading-none select-none">+</span>
+            </summary>
+            <p class="font-body text-sm leading-relaxed pb-6 pr-10">No — it&rsquo;s a library. Open a dossier in your browser, read the autopsy, and copy the agent prompt into whatever AI coder you already use.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FINAL INK CTA -->
+<section class="bg-ink text-cream">
+  <div class="max-w-screen-xl mx-auto px-4 py-20 text-center">
+    <p class="font-mono text-xs uppercase tracking-widest opacity-70 mb-4">Final edition notice</p>
+    <h2 class="font-display font-black tracking-tighter leading-[0.95] text-4xl sm:text-5xl lg:text-7xl max-w-3xl mx-auto">Read the autopsy before you become one.</h2>
+    <a href="#pricing" class="btn-green font-body text-xs font-semibold uppercase tracking-widest px-10 py-4 min-h-[44px] mt-10 inline-flex items-center justify-center">Start reading — free</a>
+  </div>
+</section>
+
+<!-- 10. FOOTER -->
+<footer class="border-t-4 border-ink bg-cream">
+  <div class="max-w-screen-xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <p class="font-mono text-[11px] uppercase tracking-widest text-muted">Edition Vol. 1.0 · SecondRun</p>
+    <p class="font-mono text-[11px] uppercase tracking-widest text-muted">Every failure filed. Every lesson legible.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('copyBtn');
+  var snippet = document.getElementById('rebuildSnippet');
+  if (!btn || !snippet) return;
+  btn.addEventListener('click', function () {
+    var text = snippet.textContent;
+    function done() {
+      btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, done);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      done();
+    }
+  });
+})();
+</script>
+</body>
+</html>
