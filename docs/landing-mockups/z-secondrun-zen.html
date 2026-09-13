@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecondRun — The Zen Archive of Venture Casualties</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf9f7;
+      --text: #1a1a18;
+      --text-secondary: #444444;
+      --text-tertiary: #555555;
+      --label: #444444;
+      --meta: #555555;
+      --divider: #dddddd;
+      --border: #cccccc;
+      --guide: #cccccc;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--text);
+      background-color: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: zenFadeIn 2s ease-in forwards;
+    }
+
+    @keyframes zenFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 40px 20px;
+      }
+    }
+
+    .spacer-ma {
+      height: 6vh;
+    }
+
+    .spacer-micro {
+      height: 1.5rem;
+    }
+
+    .horizontal-rule {
+      border: none;
+      height: 1px;
+      background-color: var(--divider);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .vertical-divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, #aaaaaa, transparent);
+      margin: 0 auto;
+    }
+
+    /* Section Labels and Titles */
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--label);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* Header & Navigation */
+    .zen-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--divider);
+      margin-bottom: 4vh;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .brand-name {
+      font-weight: 300;
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--meta);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 4vh 0 6vh 0;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.12;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-body {
+      max-width: 640px;
+      margin: 0 auto 3rem auto;
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+      line-height: 1.95;
+    }
+
+    .zen-button {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+      background: none;
+      border: 1px solid var(--text);
+      padding: 13px 34px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .zen-button:hover {
+      background-color: var(--text);
+      color: #ffffff;
+    }
+
+    /* Spatial Vitals Grid */
+    .vitals-list {
+      text-align: left;
+      margin: 3rem 0;
+    }
+
+    .vital-row {
+      border-top: 1px solid var(--divider);
+      padding: 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .vital-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+
+    .vital-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.35rem;
+      color: var(--text);
+    }
+
+    .vital-desc {
+      font-size: 0.72rem;
+      color: var(--meta);
+      font-family: 'Noto Sans KR', sans-serif;
+      margin-top: 4px;
+    }
+
+    /* Monastic Dossier Ledger */
+    .ledger-section {
+      text-align: left;
+    }
+
+    .dossier-item {
+      border-top: 1px solid var(--divider);
+      padding: 24px 0;
+    }
+
+    .dossier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .dossier-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .dossier-name:hover {
+      text-decoration: underline;
+    }
+
+    .dossier-meta {
+      font-size: 0.72rem;
+      color: var(--meta);
+      letter-spacing: 0.05em;
+    }
+
+    .dossier-burn {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-left: 12px;
+    }
+
+    .dossier-original {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.02rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .dossier-flaw {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      margin-bottom: 10px;
+    }
+
+    .dossier-rebuild {
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
+      border-left: 1px solid var(--border);
+      padding-left: 14px;
+      margin-top: 8px;
+      line-height: 1.8;
+    }
+
+    /* The Centerpiece Void Box (Whitespace Specimen) */
+    .zen-centerpiece-box {
+      border: 1px solid var(--border);
+      position: relative;
+      padding: 80px 40px;
+      margin: 40px auto;
+      background-color: #faf9f7;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.015);
+    }
+
+    .zen-centerpiece-box .guide-line-top,
+    .zen-centerpiece-box .guide-line-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      border-top: 1px dashed var(--guide);
+    }
+
+    .zen-centerpiece-box .guide-line-top { top: 30px; }
+    .zen-centerpiece-box .guide-line-bottom { bottom: 30px; }
+
+    .zen-centerpiece-box .guide-line-left,
+    .zen-centerpiece-box .guide-line-right {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      border-left: 1px dashed var(--guide);
+    }
+
+    .zen-centerpiece-box .guide-line-left { left: 30px; }
+    .zen-centerpiece-box .guide-line-right { right: 30px; }
+
+    .zen-box-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .zen-box-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin: 0 auto 2.5rem auto;
+      line-height: 1.9;
+    }
+
+    .zen-price-display {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 3rem;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .zen-price-subtext {
+      font-size: 0.72rem;
+      color: var(--meta);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    /* The 5 Monastic Modules */
+    .modules-list {
+      text-align: left;
+      margin-top: 2rem;
+    }
+
+    .module-item {
+      border-top: 1px solid var(--divider);
+      padding: 16px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+
+    .module-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.2rem;
+      color: var(--text-tertiary);
+      min-width: 24px;
+    }
+
+    .module-text {
+      flex: 1;
+    }
+
+    .module-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .module-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .zen-footer {
+      padding: 10vh 0 4vh 0;
+      font-size: 0.72rem;
+      color: var(--meta);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- NAVIGATION -->
+    <nav class="zen-nav">
+      <a href="/" class="brand-name">SecondRun</a>
+      <div class="nav-links">
+        <a href="#archive">Archive</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="/dashboard">Member Desk</a>
+      </div>
+    </nav>
+
+    <!-- 1. HERO: PHILOSOPHY OF SUBTRACTION -->
+    <header class="hero">
+      <span class="section-label">The Practice of Subtraction · Vol. 2026</span>
+      <h1 class="hero-title">
+        Fourteen billion dollars burned proving demand. <em>You keep the stillness.</em>
+      </h1>
+      <p class="hero-body">
+        Twelve hundred venture casualties proved that the world urgently required their software.
+        They did not fail from lack of demand—they failed from excess.
+        Too many sales representatives. Millions in venture debt. Bespoke human labor disguised as software.
+        The second run removes everything until only pure code remains.
+      </p>
+      <div>
+        <a href="#pass" class="zen-button">Acquire Member Clearance</a>
+      </div>
+    </header>
+
+    <div class="vertical-divider"></div>
+    <div class="spacer-ma"></div>
+
+    <!-- 2. SPATIAL VITALS OF THE INVERSION -->
+    <section>
+      <span class="section-label">01 · Structural Inversion</span>
+      <h2 class="section-title">The Mathematics of <em>Stillness</em></h2>
+
+      <div class="vitals-list">
+        <div class="vital-row">
+          <div>
+            <div class="vital-name">Venture Capital Verified</div>
+            <div class="vital-desc">Burned by predecessors to establish validated willingness-to-pay</div>
+          </div>
+          <div class="vital-value">$14,200,000,000+</div>
+        </div>
+
+        <div class="vital-row">
+          <div>
+            <div class="vital-name">Cost Inversion Ratio</div>
+            <div class="vital-desc">Legacy monthly burn rate compared to modern serverless compute</div>
+          </div>
+          <div class="vital-value">25,000x</div>
+        </div>
+
+        <div class="vital-row">
+          <div>
+            <div class="vital-name">Salaried Payroll Burden</div>
+            <div class="vital-desc">Exact headcount required to run the automated second run</div>
+          </div>
+          <div class="vital-value">0 Persons</div>
+        </div>
+
+        <div class="vital-row">
+          <div>
+            <div class="vital-name">Time to Essence</div>
+            <div class="vital-desc">From forensic teardown to live deployed self-serve endpoint</div>
+          </div>
+          <div class="vital-value">~72 Hours</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="spacer-ma"></div>
+    <hr class="horizontal-rule">
+    <div class="spacer-ma"></div>
+
+    <!-- 3. FORENSIC AUTOPSY SPECIMENS -->
+    <section id="archive" class="ledger-section">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <span class="section-label">02 · The Archival Records</span>
+        <h2 class="section-title">Six Selected <em>Casualties</em></h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; max-width: 520px; margin: 0 auto;">
+          The initial free public preview. The remaining 1,194 records reside within the private subscriber ledger.
+        </p>
+      </div>
+
+      <!-- Atrium -->
+      <article class="dossier-item">
+        <div class="dossier-header">
+          <a href="/company/atrium" class="dossier-name">Atrium LTS</a>
+          <div class="dossier-meta">
+            <span>BATCH W18 · LEGALTECH</span>
+            <span class="dossier-burn">$75.5M Burned</span>
+          </div>
+        </div>
+        <p class="dossier-original">&ldquo;Full-service corporate legal platform for venture-backed startups.&rdquo;</p>
+        <p class="dossier-flaw">
+          Hired hundreds of salaried attorneys and paralegals to deliver custom advice disguised as software.
+          Customer acquisition costs outpaced lifetime revenue, collapsing the company when growth slowed.
+        </p>
+        <p class="dossier-rebuild">
+          The 2026 Counter-Strategy: Rebuild as a 100% self-serve, deterministic contract and SAFE generation API
+          with zero human legal staff and a flat $49/month subscription.
+        </p>
+      </article>
+
+      <!-- Fast -->
+      <article class="dossier-item">
+        <div class="dossier-header">
+          <a href="/company/fast" class="dossier-name">Fast Checkout</a>
+          <div class="dossier-meta">
+            <span>BATCH S20 · FINTECH</span>
+            <span class="dossier-burn">$124.0M Burned</span>
+          </div>
+        </div>
+        <p class="dossier-original">&ldquo;The fastest one-click checkout experience for the open internet.&rdquo;</p>
+        <p class="dossier-flaw">
+          Burned $10M per month sustaining 400 employees and splashy sports sponsorships while generating
+          under $600k in annual revenue. Shop Pay already satisfied the merchant need for free.
+        </p>
+        <p class="dossier-rebuild">
+          The 2026 Counter-Strategy: Headless, open-source 1-click checkout SDK for WooCommerce and custom
+          React storefronts with 0% payment processing markup.
+        </p>
+      </article>
+
+      <!-- Pebble -->
+      <article class="dossier-item">
+        <div class="dossier-header">
+          <a href="/company/pebble" class="dossier-name">Pebble Technology</a>
+          <div class="dossier-meta">
+            <span>BATCH W11 · HARDWARE</span>
+            <span class="dossier-burn">$43.0M Burned</span>
+          </div>
+        </div>
+        <p class="dossier-original">&ldquo;Customizable e-paper smartwatch with a 7-day battery life.&rdquo;</p>
+        <p class="dossier-flaw">
+          Abandoned its cult minimalist niche to fight Apple Watch directly on color screens and voice apps.
+          Overextended on physical inventory and venture debt before demand materialized.
+        </p>
+        <p class="dossier-rebuild">
+          The 2026 Counter-Strategy: Open-source, hackable e-paper productivity wearable with 14-day battery,
+          zero subscription locks, and open HTTP notification webhooks.
+        </p>
+      </article>
+
+      <!-- ScaleFactor -->
+      <article class="dossier-item">
+        <div class="dossier-header">
+          <a href="/company/scalefactor" class="dossier-name">ScaleFactor</a>
+          <div class="dossier-meta">
+            <span>BATCH W17 · FINTECH</span>
+            <span class="dossier-burn">$104.0M Burned</span>
+          </div>
+        </div>
+        <p class="dossier-original">&ldquo;Automated AI bookkeeping and financial intelligence for small businesses.&rdquo;</p>
+        <p class="dossier-flaw">
+          Promised artificial intelligence but secretly routed bookkeeping to dozens of human accountants in Austin
+          and the Philippines. Books were riddled with errors and clients fled en masse.
+        </p>
+        <p class="dossier-rebuild">
+          The 2026 Counter-Strategy: Autonomous deterministic Plaid webhook reconciliation engine syncing
+          double-entry ledgers in real-time for $79/mo flat with zero human CPAs.
+        </p>
+      </article>
+
+      <!-- Quibi -->
+      <article class="dossier-item">
+        <div class="dossier-header">
+          <a href="/company/quibi" class="dossier-name">Quibi</a>
+          <div class="dossier-meta">
+            <span>VENTURE ARCHIVE · MEDIA</span>
+            <span class="dossier-burn">$1.75B Burned</span>
+          </div>
+        </div>
+        <p class="dossier-original">&ldquo;Quick bites of premium Hollywood storytelling designed exclusively for mobile screens.&rdquo;</p>
+        <p class="dossier-flaw">
+          Spent $100,000 per minute on celebrity productions while forbidding social sharing and screenshotting.
+          TikTok and YouTube provided superior vertical entertainment at zero content cost.
+        </p>
+        <p class="dossier-rebuild">
+          The 2026 Counter-Strategy: Decentralized, short-form micro-documentary knowledge base curated directly
+          from verified academic and technical whitepapers.
+        </p>
+      </article>
+
+      <!-- Juicero -->
+      <article class="dossier-item">
+        <div class="dossier-header">
+          <a href="/company/juicero" class="dossier-name">Juicero</a>
+          <div class="dossier-meta">
+            <span>VENTURE ARCHIVE · IOT</span>
+            <span class="dossier-burn">$120.0M Burned</span>
+          </div>
+        </div>
+        <p class="dossier-original">&ldquo;The first connected cold-press juice system with farm-fresh proprietary pouches.&rdquo;</p>
+        <p class="dossier-flaw">
+          Built a $700 Wi-Fi connected aluminum press with custom gearboxes until Bloomberg demonstrated that the
+          pouches could be squeezed more quickly with two human hands.
+        </p>
+        <p class="dossier-rebuild">
+          The 2026 Counter-Strategy: Direct-from-orchard freeze-dried organic cold-press powders delivered in
+          biodegradable sachets requiring zero proprietary hardware.
+        </p>
+      </article>
+    </section>
+
+    <div class="spacer-ma"></div>
+    <hr class="horizontal-rule">
+    <div class="spacer-ma"></div>
+
+    <!-- 4. THE ALL-ACCESS PASS (WHITESPACE DEMO & CLEARANCE) -->
+    <section id="pass">
+      <div class="zen-centerpiece-box">
+        <div class="guide-line-top"></div>
+        <div class="guide-line-bottom"></div>
+        <div class="guide-line-left"></div>
+        <div class="guide-line-right"></div>
+
+        <span class="section-label" style="margin-bottom: 0.5rem;">The Clearance Pass</span>
+        <h2 class="zen-box-title">Access the Twelve Hundred Records</h2>
+        <p class="zen-box-desc">
+          The full SecondRun archive documents 1,200+ venture casualties with their exact fatal flaws,
+          unit economics, and the complete 5-module autonomous code blueprints for Cursor and Claude Code.
+        </p>
+
+        <div class="zen-price-display">$49</div>
+        <div class="zen-price-subtext">Single payment · Permanent lifetime clearance</div>
+
+        <div>
+          <a href="/pricing" class="zen-button">Unlock Full Vault ($49)</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="spacer-ma"></div>
+    <hr class="horizontal-rule">
+    <div class="spacer-ma"></div>
+
+    <!-- 5. THE 5-MODULE AUTONOMOUS PROMPTS -->
+    <section class="modules-list" id="philosophy">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <span class="section-label">03 · Autonomous Architecture</span>
+        <h2 class="section-title">The Five <em>Directives</em></h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; max-width: 520px; margin: 0 auto;">
+          Every casualty in our vault is accompanied by five production blueprints formatted for AI coding agents.
+        </p>
+      </div>
+
+      <div class="module-item">
+        <span class="module-number">01</span>
+        <div class="module-text">
+          <h3 class="module-title">The Centerpiece: Forensic Failure Autopsy</h3>
+          <p class="module-desc">
+            The unsparing breakdown of why the predecessor died: CAC/LTV inversions, 3 lethal anti-patterns,
+            and non-negotiable negative engineering constraints.
+          </p>
+        </div>
+      </div>
+
+      <div class="module-item">
+        <span class="module-number">02</span>
+        <div class="module-text">
+          <h3 class="module-title">Linear / Modern Dark UI Design Prompt</h3>
+          <p class="module-desc">
+            Clean structural layout canvas with an explicit mandate for the AI to invent a bespoke brand identity,
+            subscriber command console, and split-screen editor.
+          </p>
+        </div>
+      </div>
+
+      <div class="module-item">
+        <span class="module-number">03</span>
+        <div class="module-text">
+          <h3 class="module-title">Autonomous Agent System Directives (AGENTS.md)</h3>
+          <p class="module-desc">
+            Self-healing test recovery loops, zero hallucinated dependencies, and strict multi-tenant
+            database query isolation rules.
+          </p>
+        </div>
+      </div>
+
+      <div class="module-item">
+        <span class="module-number">04</span>
+        <div class="module-text">
+          <h3 class="module-title">Nine-Ticket Progressive TDD Plan</h3>
+          <p class="module-desc">
+            Chronological tickets progressing from multi-tenant Prisma schema to idempotent Stripe webhooks
+            and Vitest assertions.
+          </p>
+        </div>
+      </div>
+
+      <div class="module-item">
+        <span class="module-number">05</span>
+        <div class="module-text">
+          <h3 class="module-title">Zero-Sales Product-Led Playbook</h3>
+          <p class="module-desc">
+            Programmatic diagnostic SEO, asymmetric competitor hijack wedges, and 60-second time-to-first-value
+            checkout funnels with zero human sales calls.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="zen-footer">
+      <div class="vertical-divider" style="height: 60px; margin-bottom: 2rem;"></div>
+      <p>SecondRun · The Zen Archive of Venture Casualties · 2026</p>
+      <p style="margin-top: 6px; font-size: 0.65rem; color: var(--text-tertiary);">
+        <a href="/dashboard" style="color: inherit; text-decoration: none; border-bottom: 1px solid var(--divider);">Subscriber Console</a>
+        &nbsp;·&nbsp;
+        <a href="/zen-minimalism-spec.html" style="color: inherit; text-decoration: none; border-bottom: 1px solid var(--divider);">Style Specification</a>
+      </p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

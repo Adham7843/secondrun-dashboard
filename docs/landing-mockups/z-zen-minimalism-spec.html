@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zen Minimalism — Design System Specification</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf9f7;
+      --text: #1a1a18;
+      --text-secondary: #444444;
+      --text-tertiary: #555555;
+      --label: #444444;
+      --meta: #555555;
+      --divider: #dddddd;
+      --border: #cccccc;
+      --guide: #cccccc;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--text);
+      background-color: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: zenEntrance 2s ease-in forwards;
+    }
+
+    @keyframes zenEntrance {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 40px 20px;
+      }
+    }
+
+    .spacer-ma {
+      height: 6vh;
+    }
+
+    .horizontal-rule {
+      border: none;
+      height: 1px;
+      background-color: var(--divider);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .vertical-divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, #aaaaaa, transparent);
+      margin: 0 auto;
+    }
+
+    /* Section Headers */
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--label);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.6rem;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    /* 1. HERO */
+    .hero {
+      padding: 6vh 0 4vh 0;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+      line-height: 1.1;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-body {
+      max-width: 620px;
+      margin: 0 auto 3rem auto;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.95;
+    }
+
+    .zen-button {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+      background: none;
+      border: 1px solid var(--text);
+      padding: 12px 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .zen-button:hover {
+      background-color: var(--text);
+      color: #ffffff;
+    }
+
+    /* 2. SPACING ANATOMY */
+    .spacing-section {
+      text-align: left;
+    }
+
+    .spacing-row {
+      border-top: 1px solid var(--divider);
+      padding: 18px 0;
+    }
+
+    .spacing-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .spacing-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .spacing-meta {
+      font-size: 0.72rem;
+      color: var(--meta);
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .spacing-bar-container {
+      width: 100%;
+      background: transparent;
+      padding-top: 4px;
+    }
+
+    .spacing-bar {
+      height: 2px;
+      background-color: var(--text);
+      opacity: 0.4;
+      transition: opacity 0.6s ease;
+    }
+
+    .spacing-bar:hover {
+      opacity: 0.7;
+    }
+
+    /* 3. TYPE SCALE */
+    .type-section {
+      text-align: left;
+    }
+
+    .type-specimen {
+      border-top: 1px solid var(--divider);
+      padding: 20px 0;
+    }
+
+    .type-meta {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--meta);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .specimen-display {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    .specimen-display em {
+      font-style: italic;
+    }
+
+    .specimen-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.6rem;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .specimen-body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--text-secondary);
+      max-width: 640px;
+    }
+
+    .specimen-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+
+    .specimen-meta {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      color: var(--meta);
+    }
+
+    /* 4. PALETTE */
+    .palette-grid {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      padding: 20px 0;
+    }
+
+    @media (max-width: 600px) {
+      .palette-grid {
+        gap: 30px;
+      }
+    }
+
+    .swatch-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .swatch-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      margin-bottom: 14px;
+      box-shadow: 0 0 0 1px var(--border);
+    }
+
+    .swatch-ink {
+      background-color: #1a1a18;
+    }
+
+    .swatch-stone {
+      background-color: #999999;
+    }
+
+    .swatch-paper {
+      background-color: #faf9f7;
+    }
+
+    .swatch-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .swatch-hex {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--meta);
+      letter-spacing: 0.05em;
+    }
+
+    .swatch-role {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
+    /* 5. WHITESPACE DEMO */
+    .whitespace-box {
+      border: 1px solid var(--border);
+      position: relative;
+      padding: 80px 40px;
+      margin: 20px auto;
+      max-width: 720px;
+      background-color: #faf9f7;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .guide-line-top, .guide-line-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      border-top: 1px dashed var(--guide);
+    }
+
+    .guide-line-top { top: 30px; }
+    .guide-line-bottom { bottom: 30px; }
+
+    .guide-line-left, .guide-line-right {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      border-left: 1px dashed var(--guide);
+    }
+
+    .guide-line-left { left: 30px; }
+    .guide-line-right { right: 30px; }
+
+    .margin-label {
+      position: absolute;
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--meta);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .margin-label.top { top: 10px; left: 50%; transform: translateX(-50%); }
+    .margin-label.bottom { bottom: 10px; left: 50%; transform: translateX(-50%); }
+    .margin-label.left { left: 8px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+    .margin-label.right { right: 8px; top: 50%; transform: translateY(-50%) rotate(90deg); }
+
+    .whitespace-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .whitespace-ratio {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 2.2rem;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+
+    .whitespace-desc {
+      font-size: 0.85rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+    }
+
+    /* 6. DESIGN CONSTRAINTS */
+    .constraints-list {
+      text-align: left;
+    }
+
+    .constraint-item {
+      border-top: 1px solid var(--divider);
+      padding: 18px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+    }
+
+    .constraint-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.4rem;
+      color: var(--text-tertiary);
+      min-width: 32px;
+      flex-shrink: 0;
+    }
+
+    .constraint-text {
+      flex: 1;
+    }
+
+    .constraint-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .constraint-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Footer */
+    .zen-footer {
+      padding: 8vh 0 4vh 0;
+      font-size: 0.72rem;
+      color: var(--meta);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 1. HERO SECTION -->
+    <header class="hero">
+      <span class="section-label">Design Philosophy · Zen Minimalism</span>
+      <h1 class="hero-title">
+        Deliberate restraint where whitespace and typography <em>are</em> the design.
+      </h1>
+      <p class="hero-body">
+        Nothing is added for decoration. Every element exists in quiet dialogue with empty space.
+        Hierarchy arises not from heavy weight or strident accents, but from subtle variations
+        in scale, position, and tonal depth.
+      </p>
+      <div>
+        <a href="#constraints" class="zen-button">Observe Constraints</a>
+      </div>
+    </header>
+
+    <div class="vertical-divider"></div>
+    <div class="spacer-ma"></div>
+
+    <!-- 2. SPACING ANATOMY -->
+    <section class="spacing-section">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <span class="section-label">01 · Spatial Architecture</span>
+        <h2 class="section-title">The Discipline of Spacing</h2>
+      </div>
+
+      <div class="spacing-row">
+        <div class="spacing-header">
+          <span class="spacing-name">Micro · Internal Rhythm</span>
+          <span class="spacing-meta">4px – 8px · 0.25rem – 0.5rem</span>
+        </div>
+        <div class="spacing-bar-container">
+          <div class="spacing-bar" style="width: 14%;"></div>
+        </div>
+      </div>
+
+      <div class="spacing-row">
+        <div class="spacing-header">
+          <span class="spacing-name">Component · Structural Breathing</span>
+          <span class="spacing-meta">16px – 24px · 1.0rem – 1.5rem</span>
+        </div>
+        <div class="spacing-bar-container">
+          <div class="spacing-bar" style="width: 32%;"></div>
+        </div>
+      </div>
+
+      <div class="spacing-row">
+        <div class="spacing-header">
+          <span class="spacing-name">Section · Meditative Separation</span>
+          <span class="spacing-meta">48px – 72px · 3.0rem – 4.5rem</span>
+        </div>
+        <div class="spacing-bar-container">
+          <div class="spacing-bar" style="width: 60%;"></div>
+        </div>
+      </div>
+
+      <div class="spacing-row">
+        <div class="spacing-header">
+          <span class="spacing-name">Ma (間) · Negative Void Ratio</span>
+          <span class="spacing-meta">10vh – 14vh · Uninterrupted Silence</span>
+        </div>
+        <div class="spacing-bar-container">
+          <div class="spacing-bar" style="width: 100%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="spacer-ma"></div>
+    <hr class="horizontal-rule">
+    <div class="spacer-ma"></div>
+
+    <!-- 3. TYPE SCALE -->
+    <section class="type-section">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <span class="section-label">02 · Typographic Hierarchy</span>
+        <h2 class="section-title">The Five Specimens</h2>
+      </div>
+
+      <!-- Specimen 1: Display -->
+      <div class="type-specimen">
+        <div class="type-meta">SPECIMEN 01 · DISPLAY · CORMORANT GARAMOND 300 · CLAMP(2.6rem, 5.5vw, 4.8rem) · LH 1.1</div>
+        <div class="specimen-display">Form and <em>emptiness</em> arise together.</div>
+      </div>
+
+      <!-- Specimen 2: Section Title -->
+      <div class="type-specimen">
+        <div class="type-meta">SPECIMEN 02 · SECTION TITLE · CORMORANT GARAMOND 300 · 1.6rem · LH 1.3</div>
+        <div class="specimen-title">The quiet boundary between intention and stillness.</div>
+      </div>
+
+      <!-- Specimen 3: Body -->
+      <div class="type-specimen">
+        <div class="type-meta">SPECIMEN 03 · BODY TEXT · NOTO SANS KR 300 · 0.88–0.95rem · LH 1.9 · ANTIALIASED</div>
+        <p class="specimen-body">
+          Typography achieves authority through clarity rather than force. By restricting font-weight
+          strictly to 300, reading slows to an unhurried, deliberate contemplation.
+        </p>
+      </div>
+
+      <!-- Specimen 4: Label -->
+      <div class="type-specimen">
+        <div class="type-meta">SPECIMEN 04 · LABEL · CORMORANT GARAMOND 400 · 0.78rem · TRACKING 0.18em · UPPERCASE</div>
+        <div class="specimen-label">Archival Notation &amp; Field Classification</div>
+      </div>
+
+      <!-- Specimen 5: Meta -->
+      <div class="type-specimen">
+        <div class="type-meta">SPECIMEN 05 · METADATA · NOTO SANS KR 300 · 0.72rem · LH 1.6 · MUTED STONE</div>
+        <div class="specimen-meta">Revision 2026.09 · Document No. 001 · Monochrome Canon</div>
+      </div>
+    </section>
+
+    <div class="spacer-ma"></div>
+    <hr class="horizontal-rule">
+    <div class="spacer-ma"></div>
+
+    <!-- 4. PALETTE -->
+    <section>
+      <span class="section-label">03 · Trinary Pigment System</span>
+      <h2 class="section-title">Three Tones Only</h2>
+      <p style="color: var(--text-secondary); max-width: 520px; margin: 0 auto 2.5rem auto; font-size: 0.88rem;">
+        No accent colors. No saturated primaries. The interaction between deep carbon ink,
+        weathered stone, and hand-milled off-white paper.
+      </p>
+
+      <div class="palette-grid">
+        <!-- Ink -->
+        <div class="swatch-item">
+          <div class="swatch-circle swatch-ink"></div>
+          <span class="swatch-name">Carbon Ink</span>
+          <span class="swatch-hex">#1a1a18</span>
+          <span class="swatch-role">Primary Text &amp; Bounds</span>
+        </div>
+
+        <!-- Stone -->
+        <div class="swatch-item">
+          <div class="swatch-circle swatch-stone"></div>
+          <span class="swatch-name">Muted Stone</span>
+          <span class="swatch-hex">#999999</span>
+          <span class="swatch-role">Metadata &amp; Hairlines</span>
+        </div>
+
+        <!-- Paper -->
+        <div class="swatch-item">
+          <div class="swatch-circle swatch-paper"></div>
+          <span class="swatch-name">Warm Paper</span>
+          <span class="swatch-hex">#faf9f7</span>
+          <span class="swatch-role">Immense Canvas</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="spacer-ma"></div>
+    <hr class="horizontal-rule">
+    <div class="spacer-ma"></div>
+
+    <!-- 5. WHITESPACE DEMO -->
+    <section>
+      <span class="section-label">04 · Ma (間) Demonstration</span>
+      <h2 class="section-title">Seventy Percent Negative Space</h2>
+
+      <div class="whitespace-box">
+        <div class="guide-line-top"></div>
+        <div class="guide-line-bottom"></div>
+        <div class="guide-line-left"></div>
+        <div class="guide-line-right"></div>
+
+        <span class="margin-label top">Top Margin · 80px</span>
+        <span class="margin-label bottom">Bottom Margin · 80px</span>
+        <span class="margin-label left">Guide 30px</span>
+        <span class="margin-label right">Guide 30px</span>
+
+        <div class="whitespace-inner">
+          <div class="whitespace-ratio">70% Void Ratio</div>
+          <p class="whitespace-desc">
+            The space surrounding this phrase is not empty; it is active presence.
+            It shields the message from visual haste and noise.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="spacer-ma"></div>
+    <hr class="horizontal-rule">
+    <div class="spacer-ma"></div>
+
+    <!-- 6. DESIGN CONSTRAINTS -->
+    <section id="constraints" class="constraints-list">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <span class="section-label">05 · Non-Negotiable Canon</span>
+        <h2 class="section-title">Six Design Constraints</h2>
+      </div>
+
+      <div class="constraint-item">
+        <span class="constraint-number">01</span>
+        <div class="constraint-text">
+          <h3 class="constraint-title">Single-Column Discipline</h3>
+          <p class="constraint-desc">
+            All elements progress in a serene, unbranching vertical continuum.
+            Multi-column grid systems and fragmented dashboards are entirely forbidden.
+          </p>
+        </div>
+      </div>
+
+      <div class="constraint-item">
+        <span class="constraint-number">02</span>
+        <div class="constraint-text">
+          <h3 class="constraint-title">Weight 300 Monasticism</h3>
+          <p class="constraint-desc">
+            Bold weights are forbidden. True typographic hierarchy is expressed exclusively
+            through spatial distance, point-size scale, and tonal differentiation.
+          </p>
+        </div>
+      </div>
+
+      <div class="constraint-item">
+        <span class="constraint-number">03</span>
+        <div class="constraint-text">
+          <h3 class="constraint-title">Strict Trinary Palette</h3>
+          <p class="constraint-desc">
+            Maximum three tones: near-black (#1a1a18), weathered mid-gray (#999999), and off-white paper (#faf9f7).
+            Zero accent colors, saturated links, or colored status badges.
+          </p>
+        </div>
+      </div>
+
+      <div class="constraint-item">
+        <span class="constraint-number">04</span>
+        <div class="constraint-text">
+          <h3 class="constraint-title">Hairline Geometry</h3>
+          <p class="constraint-desc">
+            Borders shall never exceed 1 pixel in width. Shadows are restricted to imperceptible
+            elevations below rgba(0, 0, 0, 0.02). Heavy card surfaces are eliminated.
+          </p>
+        </div>
+      </div>
+
+      <div class="constraint-item">
+        <span class="constraint-number">05</span>
+        <div class="constraint-text">
+          <h3 class="constraint-title">Contemplative Pace</h3>
+          <p class="constraint-desc">
+            Page entrances emerge over a tranquil 2-second ease-in. Rapid transitions, spring easings,
+            parallax triggers, and frantic micro-interactions are rejected.
+          </p>
+        </div>
+      </div>
+
+      <div class="constraint-item">
+        <span class="constraint-number">06</span>
+        <div class="constraint-text">
+          <h3 class="constraint-title">Remove What You Can</h3>
+          <p class="constraint-desc">
+            Perfection is achieved not when there is nothing more to add, but when there is
+            nothing left to take away. Every icon, illustration, or flourish is stripped.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="zen-footer">
+      <div class="vertical-divider" style="height: 60px; margin-bottom: 2rem;"></div>
+      <p>Zen Minimalism Design System · Strict Canon 2026</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
