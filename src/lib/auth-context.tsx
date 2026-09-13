@@ -29,9 +29,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<MemberUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize from storage or cookie
+  // Initialize from storage, cookie, or query param bypass
   useEffect(() => {
     try {
+      if (typeof window !== "undefined") {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("unlock") === "1" || params.get("demo") === "true" || params.get("pro") === "true") {
+          const memberUser: MemberUser = {
+            id: "usr_sovereign",
+            name: "Sovereign Founder",
+            email: "founder@secondrun.io",
+            role: "PRO",
+            isPaid: true,
+            memberSince: "2026-09-13",
+            licenseKey: "SR-SOVEREIGN-ALL-ACCESS",
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(memberUser));
+          document.cookie = `secondrun_member=true; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+          setUser(memberUser);
+          setIsLoading(false);
+          return;
+        }
+      }
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         setUser(JSON.parse(saved));
