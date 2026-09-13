@@ -65,7 +65,7 @@ https://secondrun.io/company/${active.slug}`;
   };
 
   return (
-    <div className="border border-ink-200 bg-white p-6 rounded-sm shadow-2xs space-y-6">
+    <div className="border border-ink-200 bg-white p-4 sm:p-6 rounded-sm shadow-2xs space-y-5 sm:space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-ink-200 pb-4 gap-3">
         <div>
           <div className="flex items-center gap-2">
@@ -82,12 +82,12 @@ https://secondrun.io/company/${active.slug}`;
           </p>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
-          <label className="text-xs font-mono text-ink-600">Startup:</label>
+        <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+          <label className="text-xs font-mono text-ink-600 shrink-0">Startup:</label>
           <select
             value={selectedSlug}
             onChange={(e) => setSelectedSlug(e.target.value)}
-            className="text-xs font-mono bg-[#FAF9F6] border border-ink-300 rounded px-2.5 py-1.5 text-ink font-semibold focus:outline-none focus:border-ink"
+            className="text-xs font-mono bg-[#FAF9F6] border border-ink-300 rounded px-2.5 py-1.5 text-ink font-semibold focus:outline-none focus:border-ink w-full sm:max-w-xs truncate"
           >
             {companies.map((c) => (
               <option key={c.slug} value={c.slug}>

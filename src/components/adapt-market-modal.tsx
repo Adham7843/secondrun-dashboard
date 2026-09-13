@@ -106,22 +106,22 @@ model EgyptMerchant {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 p-4 backdrop-blur-sm">
-      <div className="relative w-full max-w-2xl rounded-sm border border-ink-300 bg-white p-6 shadow-xl space-y-5">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 p-3 sm:p-4 backdrop-blur-sm">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-sm border border-ink-300 bg-white p-4 sm:p-6 shadow-xl space-y-4 sm:space-y-5">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 p-1 text-ink-400 hover:text-ink"
+          className="absolute right-3 top-3 sm:right-4 sm:top-4 p-1 text-ink-400 hover:text-ink"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Title */}
-        <div>
+        <div className="pr-6">
           <Badge variant="rebuild" className="text-[10px] font-mono mb-1">
             FreeLLMAPI Regional Adapter
           </Badge>
-          <h3 className="font-display text-xl font-bold text-ink">
+          <h3 className="font-display text-lg sm:text-xl font-bold text-ink">
             Adapt {companyName} Blueprint for Local Markets
           </h3>
           <p className="text-xs text-ink-600 mt-1">
@@ -135,7 +135,7 @@ model EgyptMerchant {
           <label className="text-xs font-mono uppercase text-ink-600 block">
             Target Regional Market:
           </label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
             <button
               onClick={() => setTargetMarket("eg")}
               className={`p-3 rounded border text-left transition-all ${

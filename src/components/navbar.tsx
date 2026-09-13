@@ -14,10 +14,10 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-ink-200 bg-[#FAF9F6]/95 backdrop-blur supports-[backdrop-filter]:bg-[#FAF9F6]/80">
       {/* Top edition strip */}
-      <div className="border-b border-ink-200/60 bg-ink-100/50 px-4 py-1 text-center text-[11px] font-mono tracking-widest text-ink-600 uppercase flex items-center justify-between max-w-7xl mx-auto">
-        <span>Vol. 1 · The Startup Morgue File</span>
-        <span>1,200+ Autopsies Filed · 42 YC Batches</span>
-        <span className="text-rebuild font-semibold">Lifetime Pass: $49</span>
+      <div className="border-b border-ink-200/60 bg-ink-100/50 px-4 py-1 text-center text-[10px] sm:text-[11px] font-mono tracking-wider sm:tracking-widest text-ink-600 uppercase flex items-center justify-between max-w-7xl mx-auto">
+        <span>Vol. 1 · Morgue File</span>
+        <span className="hidden sm:inline">1,200+ Autopsies Filed · 40 YC Batches</span>
+        <span className="text-rebuild font-semibold">Pass: $49</span>
       </div>
 
       <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6">

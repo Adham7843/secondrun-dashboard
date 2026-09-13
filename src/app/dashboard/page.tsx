@@ -81,7 +81,7 @@ export default async function DashboardPage() {
         {/* 2. TODAY'S FEATURED REBUILD (ROTATES DAILY FOR 1,200 DAYS)              */}
         {/* ---------------------------------------------------------------------- */}
         {dailyFeatured && (
-          <section className="border-2 border-rebuild/40 bg-white p-6 sm:p-8 rounded-sm shadow-sm space-y-6">
+          <section className="border-2 border-rebuild/40 bg-white p-4 sm:p-7 rounded-sm shadow-sm space-y-5 sm:space-y-6">
             <div className="flex items-center justify-between border-b border-ink-200 pb-3 flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs font-bold uppercase text-rebuild tracking-widest flex items-center gap-1.5">
@@ -97,16 +97,16 @@ export default async function DashboardPage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
               {/* Left 7 cols: Story & Failure Breakdown */}
               <div className="lg:col-span-7 space-y-4">
                 <div className="flex items-center gap-3.5">
-                  <CompanyLogo slug={dailyFeatured.slug} name={dailyFeatured.name} size="lg" className="rounded-xs shadow-2xs" />
+                  <CompanyLogo slug={dailyFeatured.slug} name={dailyFeatured.name} size="lg" className="rounded-xs shadow-2xs shrink-0" />
                   <div>
                     <h2 className="font-display font-bold text-2xl sm:text-3xl text-ink">
                       {dailyFeatured.name}
                     </h2>
-                    <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-ink-500 pt-0.5">
+                    <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-ink-500 pt-0.5 flex-wrap">
                       <span>{dailyFeatured.industry}</span>
                       <span>·</span>
                       <span>{dailyFeatured.foundedYear ?? "—"}–{dailyFeatured.closedYear ?? "Acquired"}</span>
@@ -124,7 +124,7 @@ export default async function DashboardPage() {
                 </div>
 
                 {dailyFeatured.teardown?.fatalFlaw && (
-                  <div className="p-4 bg-[#FFF8F7] border border-destructive/30 rounded text-xs sm:text-sm text-ink-800 space-y-1">
+                  <div className="p-3.5 sm:p-4 bg-[#FFF8F7] border border-destructive/30 rounded text-xs sm:text-sm text-ink-800 space-y-1">
                     <span className="font-mono font-bold text-destructive flex items-center gap-1 uppercase text-xs">
                       <AlertTriangle className="w-3.5 h-3.5" /> Fatal Flaw Breakdown:
                     </span>
@@ -132,7 +132,7 @@ export default async function DashboardPage() {
                   </div>
                 )}
 
-                <div className="flex items-center gap-4 text-xs font-mono text-ink-600 pt-1">
+                <div className="flex items-center gap-4 text-xs font-mono text-ink-600 pt-1 flex-wrap">
                   {dailyFeatured.capitalBurned && (
                     <span className="flex items-center gap-1">
                       <Flame className="w-3.5 h-3.5 text-destructive" />
@@ -144,7 +144,7 @@ export default async function DashboardPage() {
               </div>
 
               {/* Right 5 cols: The Lean Pivot & Directives */}
-              <div className="lg:col-span-5 bg-rebuild-light/50 border border-rebuild/30 p-6 rounded-sm space-y-4">
+              <div className="lg:col-span-5 bg-rebuild-light/50 border border-rebuild/30 p-4 sm:p-6 rounded-sm space-y-4">
                 <div>
                   <span className="font-mono text-xs font-bold uppercase text-rebuild tracking-wider block mb-1">
                     The SecondRun Counter-Strategy

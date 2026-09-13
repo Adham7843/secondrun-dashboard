@@ -152,9 +152,9 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
         </div>
 
         {/* Right Controls: Count Pill + View Mode Toggle */}
-        <div className="flex items-center gap-2.5 self-start sm:self-auto flex-wrap">
+        <div className="flex items-center gap-2 self-stretch sm:self-auto justify-between sm:justify-start flex-wrap">
           {/* Status Count Pill */}
-          <div className="text-xs font-mono text-ink-600 bg-white border border-ink-200 px-3.5 py-2.5 rounded-sm flex items-center gap-2 shadow-2xs">
+          <div className="text-xs font-mono text-ink-600 bg-white border border-ink-200 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-sm flex items-center gap-2 shadow-2xs">
             <span>
               Showing <strong className="text-ink">{Math.min(displayCount, filtered.length)}</strong> of {filtered.length} dossiers
             </span>
@@ -193,10 +193,10 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
       </div>
 
       {/* Filter Category Pills with Arrow Controls */}
-      <div className="p-3.5 sm:p-4 bg-[#FAF9F6] border border-ink-200/80 rounded-sm space-y-3 shadow-2xs">
+      <div className="p-3 sm:p-4 bg-[#FAF9F6] border border-ink-200/80 rounded-sm space-y-2.5 sm:space-y-3 shadow-2xs">
         {/* Industry Row */}
-        <div className="flex items-center gap-2.5 text-xs">
-          <span className="w-20 font-mono text-ink-600 uppercase shrink-0 text-xs font-semibold tracking-wider">
+        <div className="flex items-center gap-2 sm:gap-2.5 text-xs">
+          <span className="w-16 sm:w-20 font-mono text-ink-600 uppercase shrink-0 text-xs font-semibold tracking-wider">
             Industry:
           </span>
           <button
@@ -243,8 +243,8 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
         </div>
 
         {/* Batch Row */}
-        <div className="flex items-center gap-2.5 text-xs">
-          <span className="w-20 font-mono text-ink-600 uppercase shrink-0 text-xs font-semibold tracking-wider">
+        <div className="flex items-center gap-2 sm:gap-2.5 text-xs">
+          <span className="w-16 sm:w-20 font-mono text-ink-600 uppercase shrink-0 text-xs font-semibold tracking-wider">
             Batch:
           </span>
           <button
@@ -296,7 +296,7 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
       {/* ====================================================================== */}
       {viewMode === "grid" && (
         <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {displayedCompanies.map((c) => {
               const isAcquired = c.status === "ACQUIRED";
 
@@ -305,10 +305,10 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
                   key={c.id}
                   className="flex flex-col justify-between border border-ink-200 bg-white hover:border-ink-400 hover:shadow-md transition-all duration-200 group rounded-sm"
                 >
-                  <CardHeader className="p-6 pb-3 space-y-3.5">
+                  <CardHeader className="p-4 sm:p-6 pb-2 sm:pb-3 space-y-3 sm:space-y-3.5">
                     <div className="flex items-start justify-between gap-3">
-                      <CompanyLogo slug={c.slug} name={c.name} size="lg" className="rounded-xs shadow-2xs" />
-                      <div className="flex items-center gap-2 flex-wrap justify-end">
+                      <CompanyLogo slug={c.slug} name={c.name} size="lg" className="rounded-xs shadow-2xs shrink-0" />
+                      <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end">
                         <Badge variant="outline" className="text-xs font-mono font-medium">
                           {c.batch}
                         </Badge>
@@ -328,7 +328,7 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
                       >
                         {c.name}
                       </Link>
-                      <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-ink-500 pt-1">
+                      <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-ink-500 pt-1 flex-wrap">
                         <span>{c.industry}</span>
                         <span>·</span>
                         <span>
@@ -338,7 +338,7 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
                     </div>
                   </CardHeader>
 
-                  <CardContent className="p-6 pt-0 flex-1 flex flex-col justify-between space-y-4">
+                  <CardContent className="p-4 sm:p-6 pt-0 flex-1 flex flex-col justify-between space-y-4">
                     {/* Story-driven explanation of what the product offered */}
                     <div className="space-y-2">
                       <span className="font-mono text-xs uppercase text-ink-500 font-bold block tracking-wider">
@@ -371,14 +371,14 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
                       )}
 
                       {/* Action Buttons */}
-                      <div className="pt-2 flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2">
+                      <div className="pt-2 flex items-center justify-between gap-1.5 sm:gap-2 flex-wrap sm:flex-nowrap">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
                           {/* 1-Click Cursor Copy Button */}
                           <Button
                             variant={copiedId === c.id ? "default" : "secondary"}
                             size="sm"
                             onClick={() => handleQuickCopy(c)}
-                            className="text-xs h-9 font-mono flex items-center gap-1.5 bg-[#FAF9F6] border border-ink-200 hover:bg-ink-100 text-ink-900"
+                            className="text-xs h-9 font-mono flex items-center gap-1.5 bg-[#FAF9F6] border border-ink-200 hover:bg-ink-100 text-ink-900 px-2.5 sm:px-3"
                           >
                             {copiedId === c.id ? (
                               <>
@@ -398,7 +398,7 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
                             variant="outline"
                             size="sm"
                             onClick={() => setModalCompany(c)}
-                            className="text-xs h-9 text-ink-700 hover:text-ink flex items-center gap-1.5 bg-white border-ink-200"
+                            className="text-xs h-9 text-ink-700 hover:text-ink flex items-center gap-1.5 bg-white border-ink-200 px-2.5"
                             title="Adapt for Regional Market"
                           >
                             <Globe className="w-3.5 h-3.5 text-ink-500" />
@@ -410,7 +410,7 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
                           <Button
                             variant="primary"
                             size="sm"
-                            className="text-xs h-9 flex items-center gap-1 px-3.5 font-semibold bg-rebuild hover:bg-rebuild/90 text-white"
+                            className="text-xs h-9 flex items-center gap-1 px-3 sm:px-3.5 font-semibold bg-rebuild hover:bg-rebuild/90 text-white"
                           >
                             <span>Autopsy</span>
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -517,13 +517,13 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
                   </div>
 
                   {/* Right: Quick Actions */}
-                  <div className="flex items-center gap-2 shrink-0 self-end md:self-auto pt-2 md:pt-0">
+                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 self-start sm:self-end md:self-auto pt-2 md:pt-0 flex-wrap">
                     {/* Regional Market Adapter Button */}
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => setModalCompany(c)}
-                      className="text-xs h-9 text-ink-700 hover:text-ink flex items-center gap-1.5 bg-white border-ink-200"
+                      className="text-xs h-9 text-ink-700 hover:text-ink flex items-center gap-1.5 bg-white border-ink-200 px-2.5 sm:px-3"
                     >
                       <Globe className="w-3.5 h-3.5 text-ink-500" />
                       <span className="hidden sm:inline">Adapt Market</span>
@@ -534,7 +534,7 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
                       variant={copiedId === c.id ? "default" : "secondary"}
                       size="sm"
                       onClick={() => handleQuickCopy(c)}
-                      className="text-xs h-9 font-mono flex items-center gap-1.5 bg-[#FAF9F6] border border-ink-200 hover:bg-ink-100 text-ink-900"
+                      className="text-xs h-9 font-mono flex items-center gap-1.5 bg-[#FAF9F6] border border-ink-200 hover:bg-ink-100 text-ink-900 px-2.5 sm:px-3"
                     >
                       {copiedId === c.id ? (
                         <>
@@ -554,7 +554,7 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
                       <Button
                         variant="primary"
                         size="sm"
-                        className="text-xs h-9 flex items-center gap-1 px-3.5 font-semibold bg-rebuild hover:bg-rebuild/90 text-white"
+                        className="text-xs h-9 flex items-center gap-1 px-3 sm:px-3.5 font-semibold bg-rebuild hover:bg-rebuild/90 text-white"
                       >
                         <span>Full Autopsy</span>
                         <ArrowRight className="w-3.5 h-3.5" />
