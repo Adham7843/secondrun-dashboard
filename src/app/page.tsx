@@ -307,7 +307,8 @@ export default async function Home() {
             </h2>
             <p className="text-xs sm:text-sm text-ink-300 leading-relaxed">
               The 6 companies above are the free public preview. The full SecondRun vault unlocks
-              the entire <strong>1,200+ startup database</strong> with what made them fail, the lethal mistakes
+              the entire <strong>1,200+ startup database</strong> with a brand-new rebuild blueprint featured
+              every single day for <strong>1,200 days</strong>—what made them fail, the lethal mistakes
               to avoid, and the actionable 5-module code prompts to build them 100x leaner and profit this time.
             </p>
           </div>
@@ -354,15 +355,15 @@ export default async function Home() {
           </div>
 
           <div className="p-3.5 bg-[#1A1A1D] border border-ink-800 rounded space-y-1">
-            <span className="text-rebuild font-bold block">04 · Product-Led GTM Engine</span>
+            <span className="text-rebuild font-bold block">04 · 1,200-Day Daily Rotation</span>
             <span className="text-ink-400 leading-snug block">
-              Programmatic diagnostic SEO, anti-incumbent wedges, and turnkey social distribution.
+              A fresh startup failure autopsy &amp; rebuild blueprint featured every single day for 1,200 days.
             </span>
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-xs font-mono text-ink-400 pt-2">
-          <span>✔ Direct instant routing to Subscriber Console (/dashboard) upon payment</span>
+        <div className="flex items-center justify-between text-xs font-mono text-ink-400 pt-2 flex-wrap gap-2">
+          <span>✔ Direct routing to Private Console (/dashboard) · Daily Rotation Protocol Active</span>
           <Link href="/dashboard" className="text-rebuild hover:underline font-semibold">
             Preview Subscriber Desk →
           </Link>

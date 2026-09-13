@@ -128,7 +128,11 @@ export default function PricingPage() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-rebuild shrink-0" />
-                <strong className="text-ink">The Centerpiece: Forensic Autopsy & Anti-Death Counter-Strategy</strong>
+                <strong className="text-ink">1,200-Day Daily Rotation: 1 fresh rebuild blueprint featured every day</strong>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Check className="w-4 h-4 text-rebuild shrink-0" />
+                <strong className="text-ink">The Centerpiece: Forensic Autopsy &amp; Anti-Death Counter-Strategy</strong>
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-rebuild shrink-0" />
