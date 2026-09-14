@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import WhopCheckout from "@/components/whop-checkout";
 import {
+  ArrowRight,
   Check,
   Terminal,
   Sparkles,
@@ -166,11 +166,13 @@ export default function PricingPage() {
           </div>
 
           <div className="pt-8 space-y-3" id="checkout">
-            {/* Embedded gateway: buyer pays here, never leaves this page. */}
-            <WhopCheckout
-              planId={process.env.NEXT_PUBLIC_WHOP_PLAN_ID ?? ""}
-              priceLabel="$49 one-time"
-            />
+            {/* Gateway lives on its own page: buyer pays there, never leaves it. */}
+            <Link href="/checkout" className="block">
+              <Button variant="primary" className="w-full h-11 text-xs font-semibold shadow-sm">
+                <span>Continue to Secure Checkout ($49)</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+              </Button>
+            </Link>
 
             <p className="text-[11px] font-mono text-center text-ink-500 pt-1">
               🔒 Instant digital delivery · Strictly no refunds once accessed (
