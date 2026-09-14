@@ -175,7 +175,7 @@ export default function PricingPage() {
             </Link>
 
             <p className="text-[11px] font-mono text-center text-ink-500 pt-1">
-              🔒 Instant digital delivery · Strictly no refunds once accessed (
+              Instant digital delivery · Strictly no refunds once accessed (
               <Link href="/terms" className="underline hover:text-ink">
                 Terms of Service
               </Link>
