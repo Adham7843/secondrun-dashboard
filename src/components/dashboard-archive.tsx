@@ -31,12 +31,8 @@ export interface DashboardCompany {
   fatalFlawSummary?: string | null;
   foundedYear?: number | null;
   closedYear?: number | null;
-  teardown?: {
-    overview: string;
-    fatalFlaw?: string | null;
-    rebuildThesis?: string | null;
-    agentPrompt?: string | null;
-  } | null;
+  fatalFlaw?: string | null;
+  rebuildThesis?: string | null;
 }
 
 export default function DashboardArchive({
@@ -110,16 +106,24 @@ export default function DashboardArchive({
     });
   }, [companies, search, selectedIndustry, selectedBatch]);
 
-  const handleQuickCopy = (c: DashboardCompany) => {
+  const handleQuickCopy = async (c: DashboardCompany) => {
+    // Prompt text loads on demand: the ledger carries light fields only (CPU budget).
+    let prompt: string | null = null;
+    try {
+      const res = await fetch(`/api/company/${c.slug}/prompt`);
+      if (res.ok) prompt = (await res.json()).agentPrompt ?? null;
+    } catch {
+      prompt = null;
+    }
     const text =
-      c.teardown?.agentPrompt ||
+      prompt ||
       `# ============================================================================
 # SECOND RUN REBUILD MASTER BLUEPRINT: ${c.name.toUpperCase()}
 # SECTOR: ${c.industry.toUpperCase()} · BATCH: ${c.batch} · BURN: ${c.capitalBurned || "$10M+"}
 # ============================================================================
 Original Offer: ${c.tagline}
-Fatal Flaw: ${c.fatalFlawSummary || c.teardown?.fatalFlaw || "Unit economics collapse."}
-The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automated micro-SaaS with $0 payroll."}
+Fatal Flaw: ${c.fatalFlawSummary || c.fatalFlaw || "Unit economics collapse."}
+The 2026 Counter-Strategy: ${c.rebuildThesis || "Rebuild as an automated micro-SaaS with $0 payroll."}
 `;
     navigator.clipboard.writeText(text);
     setCopiedId(c.id);
@@ -600,7 +604,7 @@ The 2026 Counter-Strategy: ${c.teardown?.rebuildThesis || "Rebuild as an automat
         <AdaptMarketModal
           companyName={modalCompany.name}
           companySlug={modalCompany.slug}
-          originalThesis={modalCompany.teardown?.rebuildThesis ?? modalCompany.tagline}
+          originalThesis={modalCompany.rebuildThesis ?? modalCompany.tagline}
           onClose={() => setModalCompany(null)}
         />
       )}

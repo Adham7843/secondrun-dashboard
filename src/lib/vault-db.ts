@@ -25,7 +25,7 @@ export interface VaultTeardown {
   agentPrompt: string | null;
 }
 
-export interface VaultCompany {
+export interface VaultCompanyLite {
   id: string;
   slug: string;
   name: string;
@@ -37,11 +37,18 @@ export interface VaultCompany {
   fatalFlawSummary: string | null;
   foundedYear: number | null;
   closedYear: number | null;
+  fatalFlaw: string | null;
+  rebuildThesis: string | null;
+}
+
+export interface VaultCompany extends VaultCompanyLite {
   teardown: VaultTeardown | null;
 }
 
-/** Full vault ledger for members: every company + prompt fields. */
-export async function getVaultLedger(): Promise<VaultCompany[]> {
+/** Member ledger, LIGHT fields only (no overview, no agentPrompt).
+ * Full prompts load per-company on demand via promptFor().
+ * Keeps every response far under the free-tier CPU limit. */
+export async function getVaultLedger(): Promise<VaultCompanyLite[]> {
   const d = db();
   const rows = await d
     .select({
@@ -56,10 +63,8 @@ export async function getVaultLedger(): Promise<VaultCompany[]> {
       fatalFlawSummary: companies.fatalFlawSummary,
       foundedYear: companies.foundedYear,
       closedYear: companies.closedYear,
-      overview: teardownsPro.overview,
       fatalFlaw: teardownsPro.fatalFlaw,
       rebuildThesis: teardownsPro.rebuildThesis,
-      agentPrompt: teardownsPro.agentPrompt,
     })
     .from(companies)
     .leftJoin(teardownsPro, eq(teardownsPro.companyId, companies.id));
@@ -76,16 +81,43 @@ export async function getVaultLedger(): Promise<VaultCompany[]> {
     fatalFlawSummary: r.fatalFlawSummary,
     foundedYear: r.foundedYear,
     closedYear: r.closedYear,
-    teardown:
-      r.overview === null
-        ? null
-        : {
-            overview: r.overview,
-            fatalFlaw: r.fatalFlaw,
-            rebuildThesis: r.rebuildThesis,
-            agentPrompt: r.agentPrompt,
-          },
+    fatalFlaw: r.fatalFlaw,
+    rebuildThesis: r.rebuildThesis,
   }));
+}
+
+/** Single-company prompt fields, fetched on demand (copy buttons, workspace). */
+export async function promptFor(slug: string): Promise<{
+  name: string;
+  slug: string;
+  industry: string;
+  batch: string;
+  capitalBurned: string | null;
+  tagline: string;
+  fatalFlawSummary: string | null;
+  fatalFlaw: string | null;
+  rebuildThesis: string | null;
+  agentPrompt: string | null;
+} | null> {
+  const d = db();
+  const rows = await d
+    .select({
+      name: companies.name,
+      slug: companies.slug,
+      industry: companies.industry,
+      batch: companies.batch,
+      capitalBurned: companies.capitalBurned,
+      tagline: companies.tagline,
+      fatalFlawSummary: companies.fatalFlawSummary,
+      fatalFlaw: teardownsPro.fatalFlaw,
+      rebuildThesis: teardownsPro.rebuildThesis,
+      agentPrompt: teardownsPro.agentPrompt,
+    })
+    .from(companies)
+    .leftJoin(teardownsPro, eq(teardownsPro.companyId, companies.id))
+    .where(eq(companies.slug, slug))
+    .limit(1);
+  return rows[0] ?? null;
 }
 
 export interface VaultFounder {
@@ -96,11 +128,12 @@ export interface VaultFounder {
   linkedinUrl: string | null;
 }
 
-export interface VaultDossier extends VaultCompany {
+export interface VaultDossier extends VaultCompanyLite {
   location: string | null;
   ycUrl: string | null;
   websiteUrl: string | null;
   founders: VaultFounder[];
+  teardown: VaultTeardown;
   sections: { title: string; body: string }[];
   antiPatterns: string[];
   sources: string[];
@@ -150,6 +183,8 @@ export async function getVaultDossier(slug: string): Promise<VaultDossier | null
     location: c.location,
     ycUrl: c.ycUrl,
     websiteUrl: c.websiteUrl,
+    fatalFlaw: t.fatalFlaw,
+    rebuildThesis: t.rebuildThesis,
     founders: team.map((f) => ({
       id: f.id,
       name: f.name,

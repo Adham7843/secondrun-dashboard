@@ -1,4 +1,4 @@
-import { getVaultLedger } from "@/lib/vault-db";
+import { getVaultLedger, promptFor } from "@/lib/vault-db";
 import Link from "next/link";
 import AuthGate from "@/components/auth-gate";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +28,8 @@ export default async function DashboardPage() {
   const dayNumber = Math.max(1, Math.floor((now.getTime() - startEpoch) / (1000 * 60 * 60 * 24)) + 1);
   const featuredIndex = ((dayNumber - 1) % companies.length + companies.length) % companies.length;
   const dailyFeatured = companies[featuredIndex] || companies[0];
+  // Single-company prompt fetch: the ledger carries light fields only (CPU budget).
+  const featuredPrompt = dailyFeatured ? await promptFor(dailyFeatured.slug) : null;
 
   return (
     <AuthGate>
@@ -101,12 +103,12 @@ export default async function DashboardPage() {
                   </p>
                 </div>
 
-                {dailyFeatured.teardown?.fatalFlaw && (
+                {dailyFeatured.fatalFlaw && (
                   <div className="p-3.5 sm:p-4 bg-[#FFF8F7] border border-destructive/30 rounded text-xs sm:text-sm text-ink-800 space-y-1">
                     <span className="font-mono font-bold text-destructive flex items-center gap-1 uppercase text-xs">
                       <AlertTriangle className="w-3.5 h-3.5" /> Fatal Flaw Breakdown:
                     </span>
-                    <p className="leading-relaxed font-serif italic">{dailyFeatured.teardown.fatalFlaw}</p>
+                    <p className="leading-relaxed font-serif italic">{dailyFeatured.fatalFlaw}</p>
                   </div>
                 )}
 
@@ -133,14 +135,14 @@ export default async function DashboardPage() {
                 </div>
 
                 <p className="text-xs sm:text-sm text-ink-700 leading-relaxed">
-                  {dailyFeatured.teardown?.rebuildThesis ??
+                  {dailyFeatured.rebuildThesis ??
                     "Rebuild as a 100% automated self-serve micro-SaaS with sub-5-cent compute transactions and zero sales headcount."}
                 </p>
 
                 <div className="space-y-2 pt-2 border-t border-rebuild/20">
-                  {dailyFeatured.teardown?.agentPrompt && (
+                  {featuredPrompt?.agentPrompt && (
                     <CopyPromptButton
-                      promptText={dailyFeatured.teardown.agentPrompt}
+                      promptText={featuredPrompt.agentPrompt}
                       companyName={dailyFeatured.name}
                       className="w-full text-xs font-semibold h-10 shadow-2xs"
                     />
@@ -174,8 +176,8 @@ export default async function DashboardPage() {
               name: c.name,
               slug: c.slug,
               capitalBurned: c.capitalBurned,
-              fatalFlaw: c.teardown?.fatalFlaw,
-              rebuildThesis: c.teardown?.rebuildThesis,
+              fatalFlaw: c.fatalFlaw,
+              rebuildThesis: c.rebuildThesis,
               closedYear: c.closedYear,
               industry: c.industry,
             }))}
