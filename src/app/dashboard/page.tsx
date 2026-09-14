@@ -4,7 +4,7 @@ import AuthGate from "@/components/auth-gate";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import CopyPromptButton from "@/components/copy-prompt-button";
-import DashboardArchive from "@/components/dashboard-archive";
+import DashboardArchive, { type DashboardCompany } from "@/components/dashboard-archive";
 import SocialDistributionEngine from "@/components/social-distribution-engine";
 import CompanyLogo from "@/components/company-logo";
 import {
@@ -19,7 +19,13 @@ import {
 export const revalidate = 0;
 
 export default async function DashboardPage() {
-  const companies = await prisma.company.findMany({
+  // VAULT (phase 2): full 1,200 + prompts from the database behind the session gate.
+  // Until the D1 migration lands there is no database on the edge, so serve the
+  // "vault opening soon" panel instead of crashing. No prompt data is touched here.
+  let companies: DashboardCompany[] = [];
+  let vaultOnline = true;
+  try {
+    companies = await prisma.company.findMany({
     select: {
       id: true,
       slug: true,
@@ -42,7 +48,37 @@ export default async function DashboardPage() {
       },
     },
     orderBy: { createdAt: "desc" },
-  });
+    });
+  } catch {
+    vaultOnline = false;
+  }
+
+  if (!vaultOnline || companies.length === 0) {
+    return (
+      <div className="max-w-2xl mx-auto py-16 text-center space-y-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-ink text-white font-mono text-xs uppercase tracking-wider font-semibold">
+          <span>Member Vault — Opening Soon</span>
+        </div>
+        <h1 className="font-display font-bold text-3xl sm:text-4xl text-ink">
+          The 1,200-record vault is being wired up
+        </h1>
+        <p className="text-sm sm:text-base text-ink-600 leading-relaxed">
+          The full searchable archive and rebuild blueprints unlock here for
+          All-Access members. Meanwhile, the 30 free stories are live on the{" "}
+          <Link href="/" className="text-rebuild font-semibold hover:underline">
+            homepage
+          </Link>
+          .
+        </p>
+        <Link
+          href="/pricing"
+          className="inline-flex items-center gap-1 px-5 py-2.5 rounded bg-rebuild text-white text-sm font-semibold hover:bg-rebuild/90 transition-colors"
+        >
+          Get the Lifetime Pass ($49) →
+        </Link>
+      </div>
+    );
+  }
 
   // Daily Rotation Protocol: 1 fresh venture rebuild featured every day across all 1,200 startups
   const now = new Date();

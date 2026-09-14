@@ -53,7 +53,7 @@ describe("public company pages (story only, prompts paywalled)", () => {
     "utf8"
   );
 
-  it("never renders prompt suites, exporters, or spec fields", () => {
+  it("never renders prompt suites, exporters, spec fields, or the database", () => {
     for (const token of [
       "PromptSuiteViewer",
       "AgentFileExporter",
@@ -62,9 +62,15 @@ describe("public company pages (story only, prompts paywalled)", () => {
       "agentPrompt",
       "rebuildThesis",
       "businessModel",
+      "prisma",
+      "@/lib/db",
     ]) {
       expect(src).not.toContain(token);
     }
+  });
+
+  it("pre-renders the 30 public dossiers statically", () => {
+    expect(src).toContain("generateStaticParams");
   });
 
   it("routes visitors to pricing/dashboard instead", () => {

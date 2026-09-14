@@ -1,34 +1,31 @@
-import { notFound } from "next/navigation";
-import { prisma } from "@/lib/db";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import CompanyLogo from "@/components/company-logo";
+import { getLandingCompanies } from "@/lib/landing";
 
-export const revalidate = 0;
+export const revalidate = 3600; // Public dossiers are static: story only, no DB
+
+export function generateStaticParams() {
+  return getLandingCompanies().map((c) => ({ slug: c.slug }));
+}
 
 export default async function CompanyPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const company = await prisma.company.findUnique({
-    where: { slug: params.slug },
-    include: { founders: true, teardown: true },
-  });
+  // PUBLIC dossier: the 30 free stories from the static landing dataset.
+  // Any other slug lives exclusively in the member vault → send to pricing.
+  const company = getLandingCompanies().find((c) => c.slug === params.slug);
 
-  if (!company || !company.teardown) notFound();
+  if (!company || !company.teardown) redirect("/pricing");
 
   const isAcquired = company.status === "ACQUIRED";
 
-  const sections = JSON.parse(company.teardown.sections || "[]") as {
-    title: string;
-    body: string;
-  }[];
-  const sources = JSON.parse(company.teardown.sources || "[]") as string[];
-  const antiPatterns = company.teardown.antiPatterns
-    ? (JSON.parse(company.teardown.antiPatterns) as string[])
-    : [];
+  const sections = company.teardown.sections ?? [];
+  const sources = company.teardown.sources ?? [];
+  const antiPatterns = company.teardown.antiPatterns ?? [];
 
-  // PUBLIC dossier: story only (overview, fatal flaw, anti-patterns).
   // Prompt/spec data (rebuild thesis, agent prompts, blueprints) is NEVER
   // loaded here -- it lives exclusively behind the paywall in the dashboard.
 
@@ -359,19 +356,9 @@ export default async function CompanyPage({
                 </span>
                 <div className="space-y-2 text-xs">
                   {company.founders.map((f) => (
-                    <div key={f.id} className="border-b border-ink-100 pb-1.5 last:border-0 last:pb-0">
+                    <div key={f.name} className="border-b border-ink-100 pb-1.5 last:border-0 last:pb-0">
                       <strong className="text-ink-900 block font-sans text-xs sm:text-sm">{f.name}</strong>
                       <span className="text-ink-500 text-xs">{f.role || "Founder"}</span>
-                      {f.linkedinUrl && (
-                        <a
-                          href={f.linkedinUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="block text-rebuild text-xs hover:underline mt-0.5"
-                        >
-                          LinkedIn Profile →
-                        </a>
-                      )}
                     </div>
                   ))}
                 </div>
