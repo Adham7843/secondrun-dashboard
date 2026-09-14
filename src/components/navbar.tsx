@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
+import Brandmark from "@/components/brandmark";
 import { Menu, X, ShieldCheck } from "lucide-react";
 
 // VAULT navbar: member console chrome only. No marketing, no pricing, no archive.
@@ -15,9 +16,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-ink-800 bg-[#18181B]/95 text-ink-100 backdrop-blur">
       <div className="max-w-7xl mx-auto flex h-14 items-center justify-between px-4 sm:px-6">
         <Link href="/dashboard" className="flex items-center gap-2.5">
-          <div className="h-7 w-7 rounded-sm bg-rebuild text-white flex items-center justify-center font-display font-bold text-sm">
-            II
-          </div>
+          <Brandmark size="sm" />
           <span className="font-display font-bold text-lg tracking-tight">
             SecondRun <span className="text-ink-500 font-mono text-xs uppercase">Member Console</span>
           </span>
