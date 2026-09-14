@@ -1,10 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import Link from "next/link";
-import PromptSuiteViewer from "@/components/prompt-suite-viewer";
-import AgentFileExporter from "@/components/agent-file-exporter";
 import CompanyLogo from "@/components/company-logo";
-import { getMasterDossier } from "@/lib/prompt-suite";
 
 export const revalidate = 0;
 
@@ -31,9 +28,9 @@ export default async function CompanyPage({
     ? (JSON.parse(company.teardown.antiPatterns) as string[])
     : [];
 
-  const masterDossier = getMasterDossier(company, company.teardown);
-  const promptItems = masterDossier.prompts;
-  const fullPrompt = masterDossier.fullPrompt;
+  // PUBLIC dossier: story only (overview, fatal flaw, anti-patterns).
+  // Prompt/spec data (rebuild thesis, agent prompts, blueprints) is NEVER
+  // loaded here -- it lives exclusively behind the paywall in the dashboard.
 
   // Domain suggestions
   const originalDomain =
@@ -104,8 +101,18 @@ export default async function CompanyPage({
           </span>
         </div>
 
-        {/* Minimalist Agent Configuration Strip */}
-        <AgentFileExporter companyName={company.name} slug={company.slug} fullPrompt={fullPrompt} />
+        {/* Public note: full rebuild blueprints unlock with the All-Access Pass */}
+        <div className="flex items-center gap-2 text-xs font-mono">
+          <Link
+            href="/pricing"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-rebuild text-white font-semibold hover:bg-rebuild/90 transition-colors"
+          >
+            Unlock the 5 rebuild blueprints ($49) →
+          </Link>
+          <Link href="/dashboard" className="text-rebuild hover:underline font-semibold">
+            Member sign in →
+          </Link>
+        </div>
       </header>
 
       {/* Main Full-Width Broadsheet Grid */}
@@ -206,13 +213,22 @@ export default async function CompanyPage({
               Routing Around {company.name}&apos;s Fatal Bottleneck
             </h2>
 
-            {/* Pivot Thesis */}
+            {/* Locked Pivot Thesis (paywalled — story ends here for visitors) */}
             <div className="p-4 bg-rebuild-light/40 border-l-2 border-rebuild text-sm sm:text-base text-ink-800 leading-relaxed">
               <strong className="font-semibold text-rebuild block mb-1 font-mono text-xs sm:text-sm uppercase">
-                The Lean Pivot Thesis:
+                The Lean Pivot Thesis — Locked
               </strong>
-              {company.teardown.rebuildThesis ??
-                `Rebuild ${company.name} as a 100% self-serve, automated micro-SaaS with zero human service bottlenecks and instant time-to-value.`}
+              <p className="text-sm text-ink-700">
+                The full counter-strategy for {company.name} — architecture,
+                cost-inversion plan, and go-to-market wedge — is reserved for
+                All-Access members.
+              </p>
+              <Link
+                href="/pricing"
+                className="inline-flex items-center gap-1 mt-2 text-sm font-mono font-bold text-rebuild hover:underline"
+              >
+                Unlock the full thesis + 5 rebuild blueprints ($49) →
+              </Link>
             </div>
 
             {/* Cost Inversion Comparison Table */}
@@ -256,17 +272,33 @@ export default async function CompanyPage({
             </div>
           </section>
 
-          {/* CHAPTER V: THE 5-MODULE SPECIFICATION SUITE */}
+          {/* CHAPTER V: LOCKED SPECIFICATION SUITE (paywall — no prompt data rendered) */}
           <section id="engineering-specs" className="space-y-4 pt-2">
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-ink">
               The Anti-Death Engineering Specifications
             </h2>
-            <p className="text-sm sm:text-base text-ink-700 leading-relaxed">
-              Below are the 5 production prompt modules for <strong>{company.name}</strong>,
-              stacked sequentially from architecture schemas and design tokens down to agent governance,
-              TDD tickets, and zero-sales distribution.
-            </p>
-            <PromptSuiteViewer companyName={company.name} prompts={promptItems} />
+            <div className="p-6 sm:p-8 bg-[#141416] text-ink-100 rounded-sm border-2 border-rebuild space-y-4 text-center">
+              <p className="font-mono text-xs font-bold uppercase tracking-widest text-rebuild">
+                Locked — All-Access Members Only
+              </p>
+              <p className="text-sm sm:text-base text-ink-300 leading-relaxed max-w-xl mx-auto">
+                The 5 production prompt modules for <strong className="text-white">{company.name}</strong> —
+                forensic master blueprint, dark UI design system, agent directives,
+                TDD implementation tickets, and the zero-sales GTM playbook — unlock
+                with the Lifetime Pass.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-1">
+                <Link
+                  href="/pricing"
+                  className="inline-flex items-center gap-1 px-5 py-2.5 rounded bg-rebuild text-white text-sm font-semibold hover:bg-rebuild/90 transition-colors"
+                >
+                  Unlock All 5 Blueprints ($49) →
+                </Link>
+                <Link href="/dashboard" className="text-sm font-mono text-rebuild hover:underline font-semibold">
+                  Member sign in →
+                </Link>
+              </div>
+            </div>
           </section>
         </div>
 

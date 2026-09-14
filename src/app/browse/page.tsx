@@ -1,9 +1,10 @@
-import { prisma } from "@/lib/db";
+import { getLandingCompanies } from "@/lib/landing";
 import BatchList from "@/components/batch-list";
 import CategoryList from "@/components/category-list";
 
 export default async function Browse() {
-  const companies = await prisma.company.findMany({ select: { batch: true, industry: true, name: true } });
+  // PUBLIC sample only: the 30 landing stories. Full vault stays in the dashboard.
+  const companies = getLandingCompanies();
   const byBatch = new Map<string, number>();
   for (const c of companies) byBatch.set(c.batch, (byBatch.get(c.batch) ?? 0) + 1);
   const batches = [...byBatch.entries()]
@@ -27,7 +28,7 @@ export default async function Browse() {
   return (
     <main style={{ padding: "2rem", maxWidth: 720 }}>
       <h1>Browse</h1>
-      <p>Scan the archive by batch or by the categories with the most reports.</p>
+      <p>Scan the free 30-story sample by batch or category. The full 1,200-record archive lives in the member dashboard.</p>
       <h2>Batches</h2>
       <BatchList batches={batches} />
       <h2>Categories</h2>

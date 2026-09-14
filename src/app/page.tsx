@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { getLandingCompanies } from "@/lib/landing";
 import SundayDispatchSignup from "@/components/sunday-dispatch-signup";
 import CompanyLogo from "@/components/company-logo";
 import { Badge } from "@/components/ui/badge";
@@ -18,39 +18,13 @@ import {
   Lock,
 } from "lucide-react";
 
-export const revalidate = 0; // Dynamic server render
-
-const FLAGSHIP_SLUGS = ["atrium", "fast", "pebble", "scalefactor", "higherme", "rdio"];
+export const revalidate = 3600; // Landing is static: 30 prompt-free stories, rebuilt hourly
 
 export default async function Home() {
-  const allCompanies = await prisma.company.findMany({
-    select: {
-      id: true,
-      slug: true,
-      name: true,
-      batch: true,
-      status: true,
-      tagline: true,
-      industry: true,
-      capitalBurned: true,
-      fatalFlawSummary: true,
-      foundedYear: true,
-      closedYear: true,
-      teardown: {
-        select: {
-          overview: true,
-          fatalFlaw: true,
-          rebuildThesis: true,
-        },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-  });
-
-  // Separate the curated flagship batch from the general directory
-  const flagshipCompanies = FLAGSHIP_SLUGS.map((slug) =>
-    allCompanies.find((c) => c.slug === slug)
-  ).filter(Boolean) as typeof allCompanies;
+  // LANDING dataset only: 30 public stories, zero prompt/spec data.
+  // The full 1,200-record vault with rebuild prompts lives exclusively
+  // behind the paywall (dashboard, served from the database).
+  const flagshipCompanies = getLandingCompanies();
 
   return (
     <div className="space-y-16 pb-16">
@@ -182,14 +156,14 @@ export default async function Home() {
       </section>
 
       {/* ---------------------------------------------------------------------- */}
-      {/* 2. CURATED FLAGSHIP BATCH (LIGHTWEIGHT, FAST, FREE NARRATIVES)         */}
+      {/* 2. FREE SAMPLE ARCHIVE (30 PUBLIC STORIES, ZERO PROMPT DATA)            */}
       {/* ---------------------------------------------------------------------- */}
       <section className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-2 border-b border-ink-200">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <Badge variant="outline" className="text-[10px] font-mono tracking-widest text-ink-600 uppercase border-ink-300">
-                Curated Flagship Batch
+                Free Sample Archive
               </Badge>
               <span className="text-xs font-mono text-rebuild font-semibold">100% Free Autopsies</span>
             </div>
@@ -198,11 +172,11 @@ export default async function Home() {
             </h2>
           </div>
           <p className="text-xs font-mono text-ink-500 max-w-sm sm:text-right">
-            Curated flagship batch for lightweight loading. Read the complete forensic rise &amp; fall stories 100% free.
+            30 free failure stories. Names, autopsies, fatal flaws — no prompts, no blueprints. Those unlock after purchase.
           </p>
         </div>
 
-        {/* 6 High-Impact Flagship Cards */}
+        {/* 30 Free Sample Cards (public stories only — prompts stay behind the paywall) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {flagshipCompanies.map((company) => {
             const isAcquired = company.status === "ACQUIRED";
@@ -306,7 +280,7 @@ export default async function Home() {
               Access the Full 1,200+ Startup Database &amp; Learn How to Repurpose Them
             </h2>
             <p className="text-xs sm:text-sm text-ink-300 leading-relaxed">
-              The 6 companies above are the free public preview. The full SecondRun vault unlocks
+              The 30 stories above are the free public preview. The full SecondRun vault unlocks
               the entire <strong>1,200+ startup database</strong> with a brand-new rebuild blueprint featured
               every single day for <strong>1,200 days</strong>—what made them fail, the lethal mistakes
               to avoid, and the actionable 5-module code prompts to build them 100x leaner and profit this time.
@@ -388,7 +362,7 @@ export default async function Home() {
           The Remaining 1,200+ Startups Live in the Dashboard
         </h2>
         <p className="text-sm sm:text-base text-ink-600 max-w-2xl mx-auto leading-relaxed">
-          The 6 teardowns above are our free public proof-of-work. The complete searchable database,
+          The 30 teardowns above are our free public proof-of-work. The complete searchable database,
           5-module production code prompts, .cursorrules downloads, and the 60-second social
           distribution desk are reserved for paid subscribers.
         </p>
