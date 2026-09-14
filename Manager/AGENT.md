@@ -11,6 +11,12 @@ no refunds). The DATA is the product. Stack: Next.js 14 + Tailwind/Radix,
 Prisma + SQLite today → Drizzle + Cloudflare D1 tomorrow. Full architecture and
 launch sequence: `plan/WHOP_LAUNCH_PLAN.md` — READ IT FIRST on every session.
 
+## Terminology (LOCKED)
+
+- **FRONTEND** = 30 free dossiers + homepage/browse/latest/pricing. Sells. Static. Prompt-free.
+- **DASHBOARD** = the paid vault (1,200 + prompts, Whop-gated). Delivers. Never public.
+- FRONTEND routes TO dashboard on payment. The two are never mixed, never deployed as one concern.
+
 ## Map (where things live)
 
 - `src/app/page.tsx`, `browse/`, `latest/` → PUBLIC, fed ONLY by `src/lib/landing.ts`

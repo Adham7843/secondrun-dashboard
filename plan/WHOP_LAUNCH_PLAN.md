@@ -3,6 +3,15 @@
 > Status: LANDING BUILT, DASHBOARD GATE PENDING. Last updated 2026-09-14.
 > Repo: `Adham7843/secondrun` (branch `main`). Holding dir: `DeadSaaS/`.
 
+## 0. Terminology (LOCKED — use exactly these words)
+
+- **FRONTEND** = the 30 free dossiers + homepage + browse/latest/pricing. Marketing.
+  Free forever. Static. Routes visitors TO the dashboard when they pay. Never holds prompts.
+- **DASHBOARD** = the paid thing. The vault: full 1,200 + all 5 prompt modules.
+  Exists ONLY behind the Whop session gate. Nothing public reads from it.
+
+FRONTEND sells. DASHBOARD delivers. Never mix them.
+
 ## 1. Product thesis (one paragraph)
 
 SecondRun sells post-mortem intelligence on 1,200 dead startups: what they built,
