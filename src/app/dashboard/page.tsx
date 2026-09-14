@@ -18,6 +18,10 @@ import {
 
 export const revalidate = 0;
 
+// Phase 1 (static landing deploy): pre-render the offline panel. Phase 2 (D1 +
+// Whop gate) flips this route back to fully dynamic.
+export const dynamic = "force-static";
+
 export default async function DashboardPage() {
   // VAULT (phase 2): full 1,200 + prompts from the database behind the session gate.
   // Until the D1 migration lands there is no database on the edge, so serve the
