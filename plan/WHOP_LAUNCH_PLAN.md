@@ -12,11 +12,17 @@
 
 FRONTEND sells. DASHBOARD delivers. Never mix them.
 
-**Access law (locked 2026-09-14):** FRONTEND never links to DASHBOARD URLs. The only
-outbound paths from any FRONTEND are Whop checkout (buy) and the member sign-in
-page on the dashboard domain (re-entry). The vault URL is unlisted: buyers receive
-it once by email, their browser keeps the 1-yr session cookie, and the purchase
-email itself is the permanent re-entry key (new magic link on demand).
+**Access law (locked 2026-09-14, revised — email is identity, cookie is cache):**
+FRONTEND never links to DASHBOARD URLs. The only outbound paths from any FRONTEND
+are Whop checkout (buy) and the member sign-in page on the dashboard domain (re-entry).
+- Identity = purchase email (Gumroad pattern). Entitlements keyed by email in D1.
+- Cross-browser proof = Whop hub (AppSumo pattern): buyer logs into Whop anywhere,
+  sees SecondRun owned, clicks through. No dependence on our cookies.
+- Re-entry = passwordless magic link (Whop's own email-login pattern): enter purchase
+  email on /signin → single-use link → fresh session on ANY browser/device.
+- Session cookie (1 yr) is a convenience cache ("remember me"), never the access
+  mechanism. Lost cookie / new browser / new phone = new magic link, zero support load.
+- License key (native per Whop membership) = receipt + support identifier + redeem path.
 
 ## 1. Product thesis (one paragraph)
 
