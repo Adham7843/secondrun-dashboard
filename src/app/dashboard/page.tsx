@@ -1,6 +1,8 @@
 import { getVaultLedger, promptFor } from "@/lib/vault-db";
+import { sessionEmail } from "@/lib/access";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import Link from "next/link";
-import AuthGate from "@/components/auth-gate";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import CopyPromptButton from "@/components/copy-prompt-button";
@@ -19,7 +21,11 @@ import {
 export const revalidate = 0;
 
 export default async function DashboardPage() {
-  // VAULT: full 1,200 ledger + prompt fields from D1 (member-gated UI).
+  // SERVER GATE: no session → signin. Prompt data never renders for strangers.
+  const member = await sessionEmail(headers().get("cookie"));
+  if (!member) redirect("/signin");
+
+  // VAULT: full 1,200 ledger (light fields) from D1.
   const companies = await getVaultLedger();
 
   // Daily Rotation Protocol: 1 fresh venture rebuild featured every day across all 1,200 startups
@@ -32,7 +38,12 @@ export default async function DashboardPage() {
   const featuredPrompt = dailyFeatured ? await promptFor(dailyFeatured.slug) : null;
 
   return (
-    <AuthGate>
+    <div className="space-y-6">
+      {/* Member session bar (server-verified) */}
+      <div className="bg-[#18181B] text-ink-100 px-4 py-2.5 rounded-sm border border-ink-800 flex items-center justify-between gap-2 text-xs font-mono">
+        <span className="text-emerald-400 font-bold">LIFETIME MEMBER PASS ACTIVE · {member}</span>
+        <span>1,200+ startups unlocked</span>
+      </div>
       <div className="space-y-10 pb-16">
         {/* ---------------------------------------------------------------------- */}
         {/* 1. CLEAN HEADER & 1,200-DAY ROTATION PROTOCOL                          */}
@@ -184,6 +195,6 @@ export default async function DashboardPage() {
           />
         </section>
       </div>
-    </AuthGate>
+    </div>
   );
 }

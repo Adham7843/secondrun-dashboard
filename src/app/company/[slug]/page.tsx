@@ -1,5 +1,7 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getVaultDossier } from "@/lib/vault-db";
+import { sessionEmail } from "@/lib/access";
+import { headers } from "next/headers";
 import Link from "next/link";
 import PromptSuiteViewer from "@/components/prompt-suite-viewer";
 import AgentFileExporter from "@/components/agent-file-exporter";
@@ -13,6 +15,10 @@ export default async function CompanyPage({
 }: {
   params: { slug: string };
 }) {
+  // SERVER GATE: dossiers carry full prompt suites — members only.
+  const member = await sessionEmail(headers().get("cookie"));
+  if (!member) redirect("/signin");
+
   // VAULT: full member dossier from D1 (story + prompt suite).
   const company = await getVaultDossier(params.slug);
 
