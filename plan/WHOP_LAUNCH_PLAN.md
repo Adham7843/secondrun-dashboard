@@ -12,6 +12,12 @@
 
 FRONTEND sells. DASHBOARD delivers. Never mix them.
 
+**Access law (locked 2026-09-14):** FRONTEND never links to DASHBOARD URLs. The only
+outbound paths from any FRONTEND are Whop checkout (buy) and the member sign-in
+page on the dashboard domain (re-entry). The vault URL is unlisted: buyers receive
+it once by email, their browser keeps the 1-yr session cookie, and the purchase
+email itself is the permanent re-entry key (new magic link on demand).
+
 ## 1. Product thesis (one paragraph)
 
 SecondRun sells post-mortem intelligence on 1,200 dead startups: what they built,
