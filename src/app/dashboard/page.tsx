@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { getVaultLedger } from "@/lib/vault-db";
 import Link from "next/link";
 import AuthGate from "@/components/auth-gate";
 import { Badge } from "@/components/ui/badge";
@@ -19,30 +19,8 @@ import {
 export const revalidate = 0;
 
 export default async function DashboardPage() {
-  const companies = await prisma.company.findMany({
-    select: {
-      id: true,
-      slug: true,
-      name: true,
-      batch: true,
-      status: true,
-      tagline: true,
-      industry: true,
-      capitalBurned: true,
-      fatalFlawSummary: true,
-      foundedYear: true,
-      closedYear: true,
-      teardown: {
-        select: {
-          overview: true,
-          fatalFlaw: true,
-          rebuildThesis: true,
-          agentPrompt: true,
-        },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  // VAULT: full 1,200 ledger + prompt fields from D1 (member-gated UI).
+  const companies = await getVaultLedger();
 
   // Daily Rotation Protocol: 1 fresh venture rebuild featured every day across all 1,200 startups
   const now = new Date();

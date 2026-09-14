@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/db";
+import { getVaultDossier } from "@/lib/vault-db";
 import Link from "next/link";
 import PromptSuiteViewer from "@/components/prompt-suite-viewer";
 import AgentFileExporter from "@/components/agent-file-exporter";
@@ -13,25 +13,21 @@ export default async function CompanyPage({
 }: {
   params: { slug: string };
 }) {
-  const company = await prisma.company.findUnique({
-    where: { slug: params.slug },
-    include: { founders: true, teardown: true },
-  });
+  // VAULT: full member dossier from D1 (story + prompt suite).
+  const company = await getVaultDossier(params.slug);
 
   if (!company || !company.teardown) notFound();
 
   const isAcquired = company.status === "ACQUIRED";
 
-  const sections = JSON.parse(company.teardown.sections || "[]") as {
-    title: string;
-    body: string;
-  }[];
-  const sources = JSON.parse(company.teardown.sources || "[]") as string[];
-  const antiPatterns = company.teardown.antiPatterns
-    ? (JSON.parse(company.teardown.antiPatterns) as string[])
-    : [];
+  const sections = company.sections;
+  const sources = company.sources;
+  const antiPatterns = company.antiPatterns;
 
-  const masterDossier = getMasterDossier(company, company.teardown);
+  const masterDossier = getMasterDossier(company, {
+    ...company.teardown,
+    antiPatterns: JSON.stringify(company.antiPatterns),
+  });
   const promptItems = masterDossier.prompts;
   const fullPrompt = masterDossier.fullPrompt;
 

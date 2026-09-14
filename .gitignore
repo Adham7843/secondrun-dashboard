@@ -41,3 +41,5 @@ yarn-error.log*
 # Local secrets & binaries (never track)
 .env
 prisma/dev.db
+.vinext/
+.wrangler/
