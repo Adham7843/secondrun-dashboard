@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_BASE_PATH: /secondrun
+      NEXT_PUBLIC_WHOP_PLAN_ID: plan_M5MLFzQq5CAEw
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

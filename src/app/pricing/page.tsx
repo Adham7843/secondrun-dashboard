@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import WhopCheckout from "@/components/whop-checkout";
 import {
   Check,
   Terminal,
@@ -13,7 +14,6 @@ import {
   Download,
   FileCode,
   Flame,
-  ArrowRight,
 } from "lucide-react";
 
 export default function PricingPage() {
@@ -165,13 +165,12 @@ export default function PricingPage() {
             </ul>
           </div>
 
-          <div className="pt-8 space-y-2">
-            <Link href="/register?plan=lifetime" className="block">
-              <Button variant="primary" className="w-full h-11 text-xs font-semibold shadow-sm">
-                <span>Unlock All-Access Lifetime Pass ($49)</span>
-                <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-              </Button>
-            </Link>
+          <div className="pt-8 space-y-3" id="checkout">
+            {/* Embedded gateway: buyer pays here, never leaves this page. */}
+            <WhopCheckout
+              planId={process.env.NEXT_PUBLIC_WHOP_PLAN_ID ?? ""}
+              priceLabel="$49 one-time"
+            />
 
             <p className="text-[11px] font-mono text-center text-ink-500 pt-1">
               🔒 Instant digital delivery · Strictly no refunds once accessed (
